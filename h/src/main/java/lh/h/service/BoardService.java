@@ -3,6 +3,8 @@ package lh.h.service;
 import lh.h.entity.Board;
 import lh.h.repository.BoardRepository;
 import org.antlr.v4.runtime.RecognitionException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,4 +39,13 @@ public class BoardService {
         boardRepository.delete(board);
     }
 
+    /* Paging */
+    @Transactional(readOnly = true)
+    public Page<Board> boardList(String searchKeyword, Pageable pageable) {
+        if (searchKeyword == null || searchKeyword.isEmpty()) {
+            return boardRepository.findAll(pageable);
+        } else {
+            return boardRepository.findByTitleContaining(searchKeyword, pageable);
+        }
+    }
 }
