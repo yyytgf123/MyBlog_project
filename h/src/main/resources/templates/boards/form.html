@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 작성</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind-out.css" rel="stylesheet">
+    <link href="/css/loginpage.css" rel="stylesheet">
+    <th:block th:replace="fragments/header :: header"></th:block>
+</head>
+<body>
+<section class=>
+    <section class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 full-height">
+        <div class="mx-auto max-w-2xl lg:max-w-4xl">
+            <h1 class="text-2xl font-bold mb-6">게시글 작성</h1>
+            <form th:object="${board}" th:action="@{/boards/form}" method="post" class="space-y-6">
+                <!-- Title Input -->
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">제목</label>
+                    <input type="text" id="title" th:field="*{title}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                           placeholder="제목을 작성해주세요.">
+                </div>
+                <!-- Content Textarea -->
+                <div>
+                    <label for="content" class="block text-sm font-medium text-gray-700">내용</label>
+                    <textarea id="content" th:field="*{content}" rows="4"
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              placeholder="내용을 작성해주세요."></textarea>
+                </div>
+                <!-- Photo Upload -->
+                <div>
+                    <label for="photo" class="block text-sm font-medium text-gray-700">사진</label>
+                    <div class="mt-1 flex items-center space-x-4">
+                        <input type="file" id="photo" class="hidden">
+                        <label for="photo"
+                               class="px-4 py-2 bg-indigo-600 text-white rounded-md cursor-pointer hover:bg-indigo-700">사진 업로드</label>
+                    </div>
+                </div>
+                <!-- Writer Input -->
+                <div>
+                    <label for="writer" class="block text-sm font-medium text-gray-700">작성자</label>
+                    <input type="text" id="writer" th:field="*{writer}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                           placeholder="작성자 이메일을 입력해주세요.">
+                </div>
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit"
+                            class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        저장
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+</section>
+</body>
+</html>
