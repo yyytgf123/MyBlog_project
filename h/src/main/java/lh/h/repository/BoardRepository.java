@@ -10,5 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    Page<Board> findByTitleContaining(@NotBlank(message = "제목은 필수 항목입니다.") @NotNull(message = "제목은 필수 항목입니다.") String keyward, Pageable pageable);
+
+    /* 게시글 작성 title 필수 작성 */
+    Page<Board> findByTitleContaining(@NotBlank(message = "제목은 필수 항목입니다.") @NotNull(message = "제목은 필수 항목입니다.") String keyword, Pageable pageable);
+
+    /* board search method */
+
 }

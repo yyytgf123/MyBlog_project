@@ -29,7 +29,6 @@
             margin-top: 20px;
         }
     </style>
-    <title>게시판 목록</title>
 </head>
 <body>
 <section class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 mt-16 full-height">
@@ -37,6 +36,17 @@
     <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
     <div class="mx-auto max-w-2xl lg:max-w-4xl">
         <h1>게시판 목록</h1>
+        <!-- board search area -->
+        <div>
+            <form action="/boards/blogpage" method = "GET">
+                <div class="search">
+                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+                </div>
+
+                <button>검색하기</button>
+            </form>
+        </div>
+        <!-- board search fin-->
         <table border="1">
             <tr>
                 <th>번호</th>
@@ -45,7 +55,7 @@
                 <th>작성일</th>
             </tr>
             <!-- board number -->
-            <tr th:each="board : ${boards}">
+            <tr th:each="board : ${boards.content}">
                 <td th:text="${board.id}"></td>
                 <section>
                     <!-- 제목에 링크 추가 -->
@@ -54,57 +64,43 @@
                     <td th:text="${board.createdDate}"></td>
                 </section>
             </tr>
+
         </table>
         <!-- 페이징 네비게이션 -->
-        <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-            <!-- Mobile Navigation -->
-            <div class="flex flex-1 justify-between sm:hidden">
+        <div class="flex justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                <!-- Previous Button -->
                 <a th:if="${boards.hasPrevious()}"
                    th:href="@{/boards/blogpage(page=${boards.number - 1}, searchKeyword=${searchKeyword})}"
-                   class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Previous
+                   class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                    <span class="sr-only">Previous</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                    </svg>
                 </a>
+
+                <!-- Paging Numbers -->
+                <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                    <a th:href="@{/boards/blogpage(page=${pageNum - 1}, searchKeyword=${searchKeyword})}"
+                    th:classappend="${pageNum == currentPage} ? 'bg-gray-300 text-gray-900' : ''"
+                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <span th:text="${pageNum}"></span>
+                    </a>
+                </span>
+                <!-- Next Button -->
                 <a th:if="${boards.hasNext()}"
                    th:href="@{/boards/blogpage(page=${boards.number + 1}, searchKeyword=${searchKeyword})}"
-                   class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Next
+                   class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20">
+                    <span class="sr-only">Next</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                    </svg>
                 </a>
-            </div>
-
-            <!-- Desktop Navigation -->
-            <!-- Page Number and Button-->
-            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center mt-3">
-                <div>
-                    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                        <!-- Previous Button -->
-                        <a th:if="${boards.hasPrevious()}"
-                           th:href="@{/boards/blogpage(page=${boards.number - 1}, searchKeyword=${searchKeyword})}"
-                           class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                            <span class="sr-only">Previous</span>
-                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                        <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
-                            <a th:href="@{/boards/blogpage(page=${pageNum - 1}, searchKeyword=${searchKeyword})}"
-                               th:classappend="${pageNum == currentPage} ? 'active' : ''"
-                                class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">
-                                <span th:text="${pageNum}">1</span>
-                            </a>
-                        </span>
-                        <!-- Next Button -->
-                        <a th:if="${boards.hasNext()}"
-                           th:href="@{/boards/blogpage(page=${boards.number + 1}, searchKeyword=${searchKeyword})}"
-                           class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                            <span class="sr-only">Next</span>
-                            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </nav>
-                </div>
-            </div>
+            </nav>
         </div>
+
+
+        <!-- start page, total page -->
         <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center mt-3">
             <div>
                 <!-- Current Page and Total Pages -->
@@ -116,11 +112,14 @@
                 </p>
             </div>
         </div>
+        <!-- start page, total page fin -->
+        <!-- board write -->
         <div class="button-container">
-            <button class="inline-flex items-center rounded-md bg-gray-50 px-4 py-2 text-xs font-medium text-gray-300 ring-1 ring-inset ring-pink-700/10" onclick="location.href='/boards/form';">
+            <button class="inline-flex items-center rounded-md bg-gray-50 px-4 py-2 text-xs font-medium text-black ring-1 ring-inset ring-pink-700/10" onclick="location.href='/boards/form';">
                 게시글 작성
             </button>
         </div>
+        <!-- board write fin -->
     </div>
 </section>
 </body>
