@@ -21,14 +21,38 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    // board main with paging
+    // board list with paging
     @GetMapping("/blogpage")
-    public String listWithPaging(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
+    public String listWithPaging(Model model, @PageableDefault(page = 1, size = 9, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
 
         Page<Board> list = boardService.boardList(searchKeyword, pageable);
 
+        int totalPages = list.getTotalPages();
+        int currentPage = list.getNumber();
+        //최대 보여줄 페이지 수
+        int maxPageNumberToShow = 5;
+
+        //시작 페이지, 끝 페이지 계산
+        int startPage = Math.max(1, currentPage - (maxPageNumberToShow / 2));
+        int endPage = Math.min(totalPages, startPage + maxPageNumberToShow - 1);
+
+        //끝 페이지가 전체 페이지보다 작으면 시작 페이지 조정
+        if (endPage - startPage < maxPageNumberToShow - 1) {
+            startPage = Math.max(1, endPage - maxPageNumberToShow -1 );
+        }
+
+        // 마지막 페이지 근처에서 5개 이상 표시되는 문제 해결
+        if (endPage - startPage + 1 > maxPageNumberToShow) {
+            startPage = Math.max(1, endPage - maxPageNumberToShow + 1);
+        }
+
         model.addAttribute("boards", list);
         model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("currentPage", currentPage + 1);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalPages", totalPages);
+
         return "boards/blogpage";
     }
 
@@ -47,7 +71,6 @@ public class BoardController {
             model.addAttribute("errorMessage", "입력 값이 올바르지 않습니다. 다시 확인해주세요.");
             return "boards/form"; // 폼 페이지로 이동
         }
-
         boardService.save(board);
         return "redirect:/boards/blogpage";
     }

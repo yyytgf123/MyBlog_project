@@ -1,3 +1,4 @@
+<!-- blog list(main) page -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -71,16 +72,8 @@
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                <div>
-                    <!-- Current Page and Total Pages -->
-                    <p class="text-sm text-gray-700">
-                        Page
-                        <span class="font-medium" th:text="${boards.number + 1}"></span>
-                        of
-                        <span class="font-medium" th:text="${boards.totalPages}"></span>
-                    </p>
-                </div>
+            <!-- Page Number and Button-->
+            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center mt-3">
                 <div>
                     <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                         <!-- Previous Button -->
@@ -92,9 +85,13 @@
                                 <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
                             </svg>
                         </a>
-                        <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
-                        <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
-                        <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
+                        <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/boards/blogpage(page=${pageNum - 1}, searchKeyword=${searchKeyword})}"
+                               th:classappend="${pageNum == currentPage} ? 'active' : ''"
+                                class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">
+                                <span th:text="${pageNum}">1</span>
+                            </a>
+                        </span>
                         <!-- Next Button -->
                         <a th:if="${boards.hasNext()}"
                            th:href="@{/boards/blogpage(page=${boards.number + 1}, searchKeyword=${searchKeyword})}"
@@ -108,8 +105,19 @@
                 </div>
             </div>
         </div>
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center mt-3">
+            <div>
+                <!-- Current Page and Total Pages -->
+                <p class="text-sm text-gray-700">
+                    Page
+                    <span class="font-medium" th:text="${boards.number + 1}"></span>
+                    of
+                    <span class="font-medium" th:text="${boards.totalPages}"></span>
+                </p>
+            </div>
+        </div>
         <div class="button-container">
-            <button class="inline-flex items-center rounded-md bg-pink-50 px-4 py-2 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10" onclick="location.href='/boards/form';">
+            <button class="inline-flex items-center rounded-md bg-gray-50 px-4 py-2 text-xs font-medium text-gray-300 ring-1 ring-inset ring-pink-700/10" onclick="location.href='/boards/form';">
                 게시글 작성
             </button>
         </div>
