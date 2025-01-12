@@ -22,36 +22,52 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    // 게시글 목록 및 검색
+    //Board list, paging, search
     @GetMapping("/blogpage")
     public String listWithPaging(Model model,
                                  @PageableDefault(page = 0, size = 9, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                 @RequestParam(required = false) String searchKeyword) {
-        Page<Board> list = boardService.boardList(searchKeyword, pageable);
+                                 //아래에서 받아온 정보를 토대로 RequestParam을 통해서 정보를 html로 전송해줌
+                                 @RequestParam(required = false)
+                                     //html에서 search부분에 name과 동일한 매개변수를 써줘야됌, 그래야지 정보를 받아옴
+                                     String searchKeyword) {
+        Page<Board> list = boardService.boardList(pageable);
 
+        //----------------------------------- Search ---------------------------------------//
+        if (searchKeyword == null) {
+
+            list = boardService.boardList(pageable);
+        } else {
+            list = boardService.boardSearchList(searchKeyword, pageable);
+        }
+        //----------------------------------- Search ---------------------------------------//
+
+        //----------------------------------- Paging ---------------------------------------//
         int totalPages = list.getTotalPages();
-        int currentPage = list.getNumber() + 1; // 페이지는 0부터 시작하므로 보정
+        int currentPage = list.getNumber() + 1; //tm는 0부터 시작해서 +1해줘야지 1페이지 위치
         int maxPageNumberToShow = 5;
 
-        //max(음수인 경우 1로 지정, start page 지정)
         int startPage = Math.max(1, currentPage - (maxPageNumberToShow / 2));
         int endPage = startPage + maxPageNumberToShow - 1;
 
         if (endPage > totalPages) {
             endPage = totalPages;
-            startPage = endPage - 4;
+            startPage = Math.max(1, endPage - (maxPageNumberToShow - 1));
         }
 
-
-        model.addAttribute("boards", list);
         model.addAttribute("searchKeyword", searchKeyword);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("totalPages", totalPages);
+        //----------------------------------- Paging ---------------------------------------//
+
+        //----------------------------------- List ----------------------------------------//
+        model.addAttribute("boards", list);
+        //----------------------------------- List ----------------------------------------//
 
         return "boards/blogpage";
     }
+
 
     // 게시글 작성 폼
     @GetMapping("/form")

@@ -37,17 +37,20 @@
     <div class="mx-auto max-w-2xl lg:max-w-4xl">
         <h1>게시판 목록</h1>
         <!-- board search area -->
-        <div>
-            <form action="/boards/blogpage" method = "GET">
-                <div class="search">
-                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
-                </div>
-
-                <button>검색하기</button>
-            </form>
-        </div>
         <!-- board search fin-->
         <table border="1">
+            <div>
+                <form action="/boards/blogpage" method = "get">
+                    <div class="search">
+                        <!-- name="searchKeyword"은 controller로 데이터를 submit(전송) -->
+                        <!-- controller의 @RequestParam을 통해 전달된 값을 받음 -->
+                        <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+                        <button type="submit">Search</button>
+                    </div>
+
+                    <button>검색하기</button>
+                </form>
+            </div>
             <tr>
                 <th>번호</th>
                 <th>제목</th>
@@ -59,7 +62,8 @@
                 <td th:text="${board.id}"></td>
                 <section>
                     <!-- 제목에 링크 추가 -->
-                    <td><a th:href="@{/boards/{id}(id=${board.id})}" th:text="${board.title}"></a></td>
+                    <td><a th:href="@{/boards/{id}
+                            (id=${board.id})}" th:text="${board.title}"></a></td>
                     <td th:text="${board.writer}"></td>
                     <td th:text="${board.createdDate}"></td>
                 </section>
@@ -69,6 +73,7 @@
         <!-- 페이징 네비게이션 -->
         <div class="flex justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
             <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+
                 <!-- Previous Button -->
                 <a th:if="${boards.hasPrevious()}"
                    th:href="@{/boards/blogpage(page=${boards.number - 1}, searchKeyword=${searchKeyword})}"
@@ -81,12 +86,14 @@
 
                 <!-- Paging Numbers -->
                 <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                    <!-- thymeleaf는 1부터 시작해서 controller(jpa)에 -1한 값을 전달 -->
                     <a th:href="@{/boards/blogpage(page=${pageNum - 1}, searchKeyword=${searchKeyword})}"
-                    th:classappend="${pageNum == currentPage} ? 'bg-gray-300 text-gray-900' : ''"
-                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        th:classappend="${pageNum == currentPage} ? 'bg-gray-300 text-gray-900' : ''"
+                        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                         <span th:text="${pageNum}"></span>
                     </a>
                 </span>
+
                 <!-- Next Button -->
                 <a th:if="${boards.hasNext()}"
                    th:href="@{/boards/blogpage(page=${boards.number + 1}, searchKeyword=${searchKeyword})}"

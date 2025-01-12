@@ -47,21 +47,24 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.delete(board);
     }
 
-    /* 페이징 처리된 게시글 목록, 검색 기능 */
-    @Transactional(readOnly = true)
     @Override
-    public Page<Board> boardList(String searchKeyword, Pageable pageable) {
-        if (searchKeyword == null || searchKeyword.isEmpty()) {
-            // 검색어가 없을 경우 전체 데이터 반환
-            return boardRepository.findAll(pageable);
+    public Page<Board> boardList(Pageable pageable) {
+        return boardRepository.findAll(pageable);
+    }
+
+    /* Paging board list*/
+    @Override
+    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
+        if (searchKeyword == null || searchKeyword.isBlank()) {
+            return boardRepository.findAll(pageable); // 전체 목록 반환
         }
-        // 검색어가 있을 경우 제목 기반 검색
         return boardRepository.findByTitleContaining(searchKeyword, pageable);
     }
 
-    /* 모든 게시글 페이징 처리 */
-    @Override
-    public Page<Board> getAllBoards(Pageable pageable) {
-        return boardRepository.findAll(pageable);
-    }
+
+//    /* Board Search */
+//    @Override
+//    public Page<Board> searchBoard(String searchKeyword, Pageable pageable) {
+//        return boardRepository.findByTitle(searchKeyword, pageable);
+//    }
 }
