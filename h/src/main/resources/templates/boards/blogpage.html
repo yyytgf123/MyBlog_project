@@ -62,8 +62,7 @@
                 <td th:text="${board.id}"></td>
                 <section>
                     <!-- 제목에 링크 추가 -->
-                    <td><a th:href="@{/boards/{id}
-                            (id=${board.id})}" th:text="${board.title}"></a></td>
+                    <td><a th:href="@{/boards/{id} (id=${board.id})}" th:text="${board.title}"></a></td>
                     <td th:text="${board.writer}"></td>
                     <td th:text="${board.createdDate}"></td>
                 </section>

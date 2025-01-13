@@ -15,9 +15,13 @@ public interface BoardService {
 
     Board findById(Long id);
 
+    /* board update */
+    void updateBoard(Long id, Board updatedBoard, MultipartFile file) throws IOException;
+
     /* form write(file update + write) */
     void saveFile(Board board, MultipartFile file) throws IOException;
 
+    /* board delete */
     void deleteById(Long id);
 
     /* board list */

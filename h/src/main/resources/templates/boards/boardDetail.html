@@ -15,18 +15,29 @@
     <p><strong>작성자:</strong> <span th:text="${board.writer}"></span></p>
     <p><strong>작성일:</strong> <span th:text="${board.createdDate}"></span></p>
 
-    <!-- 파일 업로드 -->
+    <!------ 파일 업로드 ------>
     <div>
         <img th:src="${board.filepath}" alt="첨부 이미지" style="max-width: 600px;">
     </div>
-    <!---------------->
+    <!---------------------->
 
     <p><strong>내용:</strong></p>
+
+    <!----- 게시글 수정 ------>
+    <td>
+        <form th:action="@{/boards/boardDetail/boardUpdate/{id}(id=${board.id})}" method="get">
+            <button type="submit">수정</button>
+        </form>
+    </td>
+    <!---------------------->
+
+    <!----- 게시글 삭제 ------>
     <td>
         <form th:action="@{/boards/{id}(id=${board.id})}" method="post">
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">삭제</button>
         </form>
     </td>
+    <!------------------->
 </body>
 </html>
