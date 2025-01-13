@@ -12,23 +12,24 @@
 <!-- replace file -->
 <th:block th:replace="fragments/header :: header"></th:block>
 <!-- 모달 제어 스크립트 -->
-<script src="/js/errorMessage.js"   defer></script>
+<script src="/js/errorMessage.js" defer></script>
 <th:block th:replace="fragments/errorbutton/errorButton :: errorbutton"></th:block>
 
 <section>
     <section class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 full-height">
         <div class="mx-auto max-w-2xl lg:max-w-4xl">
             <h1 class="text-2xl font-bold mb-6">게시글 작성</h1>
-            <form th:object="${board}" th:action="@{/boards/form}" method="post" class="space-y-6">
+            <!-- enctype="multipart/form-data"를 사용하여 파일 업로드 가능, 이후 아래 Photo Upload에서 name을 지정-->
+            <form th:object="${board}" th:action="@{/boards/form}" method="post" class="space-y-6" enctype="multipart/form-data">
                 <!-- Title Input -->
                 <div>
                     <label for="title" class="block text-sm font-medium text-gray-700">제목</label>
                     <input type="text" id="title" th:field="*{title}"
-
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                            placeholder="제목을 작성해주세요.">
                 </div>
                 <!-- Content Textarea -->
+                <script src="/js/selectFile.js" defer></script>
                 <div>
                     <label for="content" class="block text-sm font-medium text-gray-700">내용</label>
                     <textarea id="content" th:field="*{content}" rows="4"
@@ -37,11 +38,15 @@
                 </div>
                 <!-- Photo Upload -->
                 <div>
-                    <label for="photo" class="block text-sm font-medium text-gray-700">사진</label>
-                    <div class="mt-1 flex items-center space-x-4">
-                        <input type="file" id="photo" class="hidden">
-                        <label for="photo"
-                               class="px-4 py-2 bg-indigo-600 text-white rounded-md cursor-pointer hover:bg-indigo-700">사진 업로드</label>
+                    <div>
+                        <!-- name="file" 로 controller에 있는 file로 데이터 전송-->
+                        <label for="photo" class="px-4 py-2 bg-indigo-600 text-white rounded-md cursor-pointer hover:bg-indigo-700">
+                            사진 업로드
+                        </label>
+                        <input type="file" id="photo" name="file" class="hidden" onchange="showFileName()">
+                    </div>
+                    <div id="file-name-display" class="mt-2 text-sm text-gray-600">
+                        선택한 파일 없음
                     </div>
                 </div>
                 <!-- Writer Input -->

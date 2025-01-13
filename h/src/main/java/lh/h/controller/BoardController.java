@@ -7,10 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/boards")
@@ -68,7 +72,6 @@ public class BoardController {
         return "boards/blogpage";
     }
 
-
     // 게시글 작성 폼
     @GetMapping("/form")
     public String form(Model model) {
@@ -76,14 +79,28 @@ public class BoardController {
         return "boards/form";
     }
 
-    // 게시글 저장
+    // 게시글 작성(file upload + write + errormessage)
     @PostMapping("/form")
-    public String save(@Valid @ModelAttribute Board board, BindingResult bindingResult, Model model) {
+    public String save(@Valid @ModelAttribute Board board, BindingResult bindingResult, Model model,
+                       //html로 전송, value = "file"로 html에서 사진 file을 받아옴
+                       @RequestParam("title") String title,
+                       @RequestParam("content") String content,
+                       @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+
+        //------------------------------ title not null ------------------------------------//
         if (bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "입력 값이 올바르지 않습니다. 다시 확인해주세요.");
             return "boards/form";
         }
-        boardService.save(board);
+        //------------------------------ title not null ------------------------------------//
+
+        boardService.saveFile(board, file);
+
+        //------------------------------ file upload ------------------------------------//
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/blog/blogpage");
+        //------------------------------ title upload ------------------------------------//
+
         return "redirect:/boards/blogpage";
     }
 
