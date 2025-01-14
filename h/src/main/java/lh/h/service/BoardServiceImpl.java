@@ -22,6 +22,9 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     private final BoardRepository boardRepository;
 
+    private static final String UPLOAD_DIR = Paths.get(System.getProperty("user.dir"), "files").toString();
+
+
     public BoardServiceImpl(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
@@ -44,68 +47,73 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void saveFile(Board board, MultipartFile file) throws IOException {
-        String projectPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "files").toString();
+        // 디렉토리 생성
+        File saveDir = new File(UPLOAD_DIR);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs(); // 디렉토리가 없으면 생성
+        }
 
-        UUID uuid = UUID.randomUUID();
+        // 파일 처리
+        if (file != null && !file.isEmpty()) {
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename(); // 고유한 파일명 생성
+            String filePath = Paths.get(UPLOAD_DIR, uniqueFilename).toString(); // 전체 파일 경로 설정
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+            // 파일 저장
+            File saveFile = new File(filePath);
+            file.transferTo(saveFile); // MultipartFile을 지정 경로로 저장
 
-        File saveFile = new File(projectPath + File.separator + fileName);
+            // Board 객체에 파일 정보 저장
+            board.setFilename(uniqueFilename);
+            board.setFilepath("/files/" + uniqueFilename); // URL로 접근 가능한 경로 설정
+        }
 
-        file.transferTo(saveFile);
-
-        board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
-
-        //게시글 정보 저장
+        // 게시글 정보 저장
         boardRepository.save(board);
     }
 
-    /* board update */
     @Override
     public void updateBoard(Long id, Board updatedBoard, MultipartFile file) throws IOException {
+        // 기존 게시글 찾기
         Board existingBoard = boardRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + id)
         );
 
-        // 기존 데이터 업데이트
+        // 기존 게시글 정보 업데이트
         existingBoard.setTitle(updatedBoard.getTitle());
         existingBoard.setContent(updatedBoard.getContent());
         existingBoard.setWriter(updatedBoard.getWriter());
 
-        // 파일 업데이트
+        // 파일 처리
         if (file != null && !file.isEmpty()) {
-            // 기존 파일 삭제 (Optional)
+            // 기존 파일 삭제
             if (existingBoard.getFilepath() != null) {
-                File existingFile = new File("src/main/resources/static" + existingBoard.getFilepath());
+                File existingFile = new File(Paths.get(UPLOAD_DIR, existingBoard.getFilename()).toString());
                 if (existingFile.exists()) {
                     existingFile.delete();
                 }
             }
 
-            // 저장 경로 설정
-            String uploadDir = Paths.get("src", "main", "resources", "static", "files").toAbsolutePath().toString();
-            String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            String filePath = Paths.get(uploadDir, uniqueFilename).toString();
-
             // 디렉토리 생성
-            File saveDir = new File(uploadDir);
+            File saveDir = new File(UPLOAD_DIR);
             if (!saveDir.exists()) {
                 saveDir.mkdirs();
             }
 
-            // 파일 저장
+            // 새 파일 저장
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename(); // 고유 파일명 생성
+            String filePath = Paths.get(UPLOAD_DIR, uniqueFilename).toString(); // 전체 경로 생성
             File saveFile = new File(filePath);
-            file.transferTo(saveFile);
+            file.transferTo(saveFile); // 파일 저장
 
-            // 업데이트된 파일 정보 저장 (URL 접근 가능 경로로 설정)
+            // 업데이트된 파일 정보 저장
             existingBoard.setFilename(uniqueFilename);
-            existingBoard.setFilepath("/files/" + uniqueFilename);
+            existingBoard.setFilepath("/files/" + uniqueFilename); // URL 경로 설정
         }
 
         // 변경 사항 저장
         boardRepository.save(existingBoard);
     }
+
     /* board delete */
     @Transactional
     @Override

@@ -122,7 +122,7 @@ public class BoardController {
     /* 게시글 업데이트 페이지 이동 ----------------------------------------------------------------------------------------*/
     @GetMapping("/boardDetail/boardUpdate/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
-        // 게시글 정보 가져오기
+        // 게시글 정보 가져오기'
         Board board = boardService.findById(id);
 
         // 게시글 정보를 모델에 추가

@@ -17,7 +17,7 @@
 
     <!------ 파일 업로드 ------>
     <div>
-        <img th:src="${board.filepath}" alt="첨부 이미지" style="max-width: 600px;">
+        <img th:src="@{/files/{filename}(filename=${board.filename})}" alt="첨부 이미지" style="max-width: 600px;">
     </div>
     <!---------------------->
 
