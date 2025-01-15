@@ -5,16 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link href="/css/tailwind-out.css" rel="stylesheet">
-    <!-- 공통 헤더 포함 -->
     <th:block th:replace="fragments/header2 :: header2"></th:block>
+    <style>
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background-image: url('/picture/notion/Notion-logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .logo-container.hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.9); /* 중심 위치 유지 */
+            pointer-events: none;
+        }
+
+        .logo-container:hover {
+            transform: translate(-50%, -50%) scale(1.05); /* 중심 위치 유지 및 약간 확대 */
+            transition: transform 0.3s ease;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 최소 너비를 줄여서 공간 확보 */
+            gap: 50px;
+            width: 100%; /* 전체 화면 너비를 사용 */
+            max-width: 1300px; /* 최대 너비 제한 */
+            margin: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        .menu-container.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .menu-button {
+            width: 100%; /* 부모 컨테이너에 맞게 조정 */
+            height: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-button img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .menu-button:hover {
+            transform: scale(1.05);
+        }
+
+
+        #submenu-content {
+            display: grid; /* grid 레이아웃 적용 */
+            grid-template-columns: repeat(4, 1fr); /* 1줄에 4개의 아이템 표시 */
+            gap: 30px; /* 항목 간 간격 증가 */
+            width: 100%;
+            max-width: 1600px; /* 최대 너비 제한 */
+            margin: auto;
+            padding: 20px; /* 내부 여백 추가 */
+            background: white;
+            border-radius: 10px;
+
+            place-items: center;
+        }
+
+        #submenu-content > div:hover {
+            transform: scale(1.05); /* 마우스 오버 시 확대 */
+        }
+
+        #submenu-content img {
+            width: 120%;
+            height: 200px; /* 이미지 높이를 키움 */
+            object-fit: cover;
+            border-radius: 8px; /* 이미지 모서리 둥글게 */
+            margin-bottom: 20px; /* 이미지와 텍스트 간 간격 추가 */
+        }
+
+        #submenu-content h2 {
+            font-size: 1.4rem; /* 제목 텍스트 크기 증가 */
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        #submenu-content p {
+            font-size: 1.2rem; /* 설명 텍스트 크기 증가 */
+            text-align: center;
+            color: gray;
+        }
+
+
+    </style>
 </head>
 <body>
-<div class="mx-auto mt-56">
-    <a href="https://sable-mars-102.notion.site/DevOps-190f0a616f2e4257bfc267f247dfc896?pvs=4" class="-m-20 p-20 flex items-center justify-center">
-        <span class="sr-only">Notion link</span>
-        <img class="h-96 w-auto" src="/picture/notion.png" alt="Notion Logo">
-    </a>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="logo-container"></div>
+
+    <div class="menu-container">
+        <button class="menu-button" onclick="showMenu('devops-menu')">
+            <img src="/picture/notion/devops.png" alt="Hand-On">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">DevOps</h2>
+                <p class="text-sm">What is devops? </p>
+            </div>
+        </button>
+
+        <button class="menu-button" onclick="showMenu('os-menu')">
+            <img src="/picture/notion/os.jpeg" alt="OS">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">OS</h2>
+                <p class="text-sm">Operating Systems</p>
+            </div>
+        </button>
+
+        <button class="menu-button" onclick="showMenu('server-menu')">
+            <img src="/picture/notion/server.jpg" alt="Server">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">Server</h2>
+                <p class="text-sm">Cloud and Network</p>
+            </div>
+        </button>
+
+        <button class="menu-button" onclick="showMenu('management-menu')">
+            <img src="/picture/notion/management.jpg" alt="Management">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">Management</h2>
+                <p class="text-sm">Development Tools</p>
+            </div>
+        </button>
+
+        <button class="menu-button" onclick="showMenu('development-menu')">
+            <img src="/picture/notion/development.webp" alt="Development">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">Development</h2>
+                <p class="text-sm">Development Section</p>
+            </div>
+        </button>
+
+        <button class="menu-button" onclick="showMenu('handon-menu')">
+            <img src="/picture/notion/handon.jpg" alt="Hand-On">
+            <div class="p-4">
+                <h2 class="text-lg font-bold">Hand-On</h2>
+                <p class="text-sm">Practical Learning</p>
+            </div>
+        </button>
+    </div>
 </div>
 
+<div id="submenu-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" onclick="closeMenu()">
+    <div class="bg-white rounded-lg" onclick="event.stopPropagation()" style="width: 90%; max-width: 1600px; padding: 40px;">
+        <div id="submenu-content" class="grid gap-4 justify-items-center"></div>
+    </div>
+</div>
+
+<script>
+    const menuData = {
+        "devops-menu": [
+            { title: "DevOps", image: "/picture/notion/devops.png", url: "https://sable-mars-102.notion.site/DevOps-17ccb42f28df808e8aa0fa4c2fd75c0d?pvs=4"}
+        ],
+        "os-menu": [
+            { title: "Linux", image: "/picture/notion/item/linux.png", url: "https://sable-mars-102.notion.site/Linux-17ccb42f28df80cd8f87c2eced608f8a?pvs=4" },
+        ],
+        "server-menu": [
+            { title: "Cloud", image: "/picture/notion/item/AWSGCPAZURE.png", url: "https://sable-mars-102.notion.site/Cloud-17ccb42f28df806f865fc0478df7407f?pvs=4" },
+            { title: "Network", image: "/picture/notion/item/network.png", url: "https://sable-mars-102.notion.site/Cisco-17ccb42f28df80679813f664b3229f84?pvs=4" },
+        ],
+        "management-menu": [
+            { title: "Docker & k8s", image: "/picture/notion/item/docker&k8s.jpg", url: "https://sable-mars-102.notion.site/Dokcer-K8S-17ccb42f28df80e5ae9bedb6aefee068?pvs=4" },
+            { title: "CI/CD", image: "/picture/notion/item/cicd.jpg", url: "https://sable-mars-102.notion.site/CI-CD-17ccb42f28df8076871be9b3273e11eb?pvs=4" },
+            { title: "IaC", image: "/picture/notion/item/iac.png", url: "https://sable-mars-102.notion.site/IaC-17ccb42f28df8078ae8dfd58929a2837?pvs=4" },
+            { title: "Git", image: "/picture/notion/item/git.png", url: "https://sable-mars-102.notion.site/Git-Github-17ccb42f28df80af94f7f87a40b3fc9d?pvs=4" },
+        ],
+        "development-menu": [
+            { title: "Development Language", image: "/picture/notion/item/development.png", url: "https://sable-mars-102.notion.site/Language-17ccb42f28df8005a1ece1a9b6048ae7?pvs=4" },
+        ],
+        "handon-menu": [
+            { title: "Project-Based Learning", image: "/picture/notion/item/handon.png", url: "https://sable-mars-102.notion.site/Hand-On-17ccb42f28df807282e6d02c724130f2?pvs=4" },
+        ],
+    };
+
+    document.querySelector('.logo-container').addEventListener('click', function() {
+        animateLogoAndShowMenu();
+    });
+
+    function animateLogoAndShowMenu() {
+        const logoContainer = document.querySelector('.logo-container');
+        const menuContainer = document.querySelector('.menu-container');
+
+        logoContainer.classList.add('hidden');
+
+        setTimeout(() => {
+            menuContainer.classList.add('active');
+        }, 300);
+    }
+
+    function showMenu(menuId) {
+        const menuItems = menuData[menuId] || [];
+        const submenuContent = document.getElementById('submenu-content');
+        submenuContent.innerHTML = "";
+
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.innerHTML = `
+                <a href="${item.url}" target="_blank" class="block w-full bg-white rounded-lg shadow-md p-4">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-40 object-cover rounded-t-lg">
+                    <h2 class="mt-2 text-lg font-bold">${item.title}</h2>
+                </a>
+            `;
+            submenuContent.appendChild(menuItem);
+        });
+
+        document.getElementById('submenu-overlay').classList.remove('hidden');
+    }
+
+    function closeMenu() {
+        document.getElementById('submenu-overlay').classList.add('hidden');
+    }
+</script>
 </body>
 </html>

@@ -50,15 +50,20 @@
 
                 <!-- Profile dropdown -->
                 <!-- 로그인 시 메뉴바, 로그아웃 시 메뉴바 설정 필요 -->
-                <div class="relative ml-3" onmouseover="showMenu()" onmouseout="hideMenu()">
+                <div class="relative ml-3">
                     <div>
-                        <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                        <button type="button"
+                        class="relative flex rounded-full bg-gray-800 text-sm
+                        focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Open user menu</span>
                             <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         </button>
                     </div>
-                    <div id="dropdown-menu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                    <div id="dropdown-menu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
+                         role="menu" aria-orientation="vertical"
+                         aria-labelledby="user-menu-button" tabindex="-1">
                         <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
@@ -66,12 +71,34 @@
                 </div>
                 <!-- profile hide-->
                 <script>
-                    function showMenu() {
-                        document.getElementById("dropdown-menu").classList.remove('hidden');
+                    let isMenuVisible = false; //현 메뉴 상태 확인(true : 보임, false : 숨김)
+
+                    function toggleMenu() { // 드롭다운 메뉴 DDM 요소 갖고옴
+                        const menu = document.getElementById("dropdown-menu"); // 현재 사태를 반전
+                        isMenuVisible = !isMenuVisible;
+                        if (isMenuVisible) {
+                            menu.classList.remove(`hidden`); // `hidden` 클래스를 제거하여 메뉴를 보이게 설정
+                        } else {
+                            menu.classList.add(`hidden`); // `hidden` 클래스를 추가하여 메뉴를 숨김
+                        }
                     }
-                    function hideMenu() {
-                        document.getElementById("dropdown-menu").classList.add('hidden');
-                    }
+
+                    // 메뉴 외부를 클릭했을 때 메뉴를 닫는 이벤트 설정
+                    window.addEventListener(`click`, function (e) {
+                        // 메뉴 버튼 DDM 요소 가져옴
+                        const menuButton = document.getElementById(`user-menu-button`);
+                        // 드롭다운 메뉴 DDM 요소 가져오기
+                        const menu = document.getElementById(`dropdown-menu`);
+
+                        // 메뉴 버튼 또는 메뉴 내부를 클릭한 경우 이벤트 무시(메뉴바를 닫히지 않게 해줌)
+                        if (menuButton.contains(e.target) || menu.contains(e.target)) {
+                            return;
+                        }
+
+                        //메뉴 버튼 및 메뉴 외부를 클릭한 경우 메뉴를 숨김
+                        isMenuVisible = false;
+                        menu.classList.add(`hidden`);
+                    });
                 </script>
                 <!-- -->
             </div>

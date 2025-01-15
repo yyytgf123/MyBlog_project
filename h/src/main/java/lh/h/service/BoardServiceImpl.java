@@ -22,8 +22,6 @@ public class BoardServiceImpl implements BoardService {
     @Autowired
     private final BoardRepository boardRepository;
 
-    private static final String UPLOAD_DIR = Paths.get(System.getProperty("user.dir"), "files").toString();
-
 
     public BoardServiceImpl(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
@@ -43,7 +41,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     /* form write(file upload + write) */
-    /** file upload saveUrl**/
+    /** File Mapping url **/
+    private static final String UPLOAD_DIR = Paths.get(System.getProperty("user.dir"), "files").toString();
+
     @Override
     @Transactional
     public void saveFile(Board board, MultipartFile file) throws IOException {
