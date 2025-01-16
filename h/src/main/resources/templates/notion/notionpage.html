@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link href="/css/tailwind-out.css" rel="stylesheet">
+    <link href="/css/loginpage.css" rel="stylesheet">
     <th:block th:replace="fragments/header2 :: header2"></th:block>
     <style>
         .logo-container {
@@ -12,8 +13,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 700px;
-            height: 700px;
+            width: 600px;
+            height: 600px;
             background-image: url('/picture/notion/Notion-logo.png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -26,22 +27,20 @@
 
         .logo-container.hidden {
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.9); /* 중심 위치 유지 */
+            transform: translate(-50%, -50%) scale(0.9);
             pointer-events: none;
         }
 
         .logo-container:hover {
-            transform: translate(-50%, -50%) scale(1.05); /* 중심 위치 유지 및 약간 확대 */
-            transition: transform 0.3s ease;
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
         .menu-container {
             display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 최소 너비를 줄여서 공간 확보 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 50px;
-            width: 100%; /* 전체 화면 너비를 사용 */
-            max-width: 1300px; /* 최대 너비 제한 */
+            width: 100%;
+            max-width: 1300px;
             margin: auto;
             opacity: 0;
             transform: translateY(20px);
@@ -56,7 +55,7 @@
         }
 
         .menu-button {
-            width: 100%; /* 부모 컨테이너에 맞게 조정 */
+            width: 100%;
             height: 300px;
             background: white;
             border-radius: 8px;
@@ -75,103 +74,103 @@
             transform: scale(1.05);
         }
 
-
         #submenu-content {
-            display: grid; /* grid 레이아웃 적용 */
-            grid-template-columns: repeat(4, 1fr); /* 1줄에 4개의 아이템 표시 */
-            gap: 30px; /* 항목 간 간격 증가 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
             width: 100%;
-            max-width: 1600px; /* 최대 너비 제한 */
+            max-width: 1600px;
             margin: auto;
-            padding: 20px; /* 내부 여백 추가 */
+            padding: 20px;
             background: white;
             border-radius: 10px;
-
-            place-items: center;
+            justify-content: center;
+            align-items: center;
         }
 
         #submenu-content > div:hover {
-            transform: scale(1.05); /* 마우스 오버 시 확대 */
+            transform: scale(1.05);
         }
 
         #submenu-content img {
             width: 120%;
-            height: 200px; /* 이미지 높이를 키움 */
+            height: 200px;
             object-fit: cover;
-            border-radius: 8px; /* 이미지 모서리 둥글게 */
-            margin-bottom: 20px; /* 이미지와 텍스트 간 간격 추가 */
+            border-radius: 8px;
+            margin-bottom: 20px;
         }
 
         #submenu-content h2 {
-            font-size: 1.4rem; /* 제목 텍스트 크기 증가 */
+            font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 5px;
             text-align: center;
         }
 
         #submenu-content p {
-            font-size: 1.2rem; /* 설명 텍스트 크기 증가 */
+            font-size: 1.2rem;
             text-align: center;
             color: gray;
         }
-
-
     </style>
 </head>
 <body>
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="logo-container"></div>
+<section class="flex justify-center relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 full-height">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20"></div>
+    <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
 
-    <div class="menu-container">
-        <button class="menu-button" onclick="showMenu('devops-menu')">
-            <img src="/picture/notion/devops.png" alt="Hand-On">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">DevOps</h2>
-                <p class="text-sm">What is devops? </p>
-            </div>
-        </button>
+    <div class="h-auto min-h-screen">
+        <div class="logo-container"></div>
 
-        <button class="menu-button" onclick="showMenu('os-menu')">
-            <img src="/picture/notion/os.jpeg" alt="OS">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">OS</h2>
-                <p class="text-sm">Operating Systems</p>
-            </div>
-        </button>
-
-        <button class="menu-button" onclick="showMenu('server-menu')">
-            <img src="/picture/notion/server.jpg" alt="Server">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">Server</h2>
-                <p class="text-sm">Cloud and Network</p>
-            </div>
-        </button>
-
-        <button class="menu-button" onclick="showMenu('management-menu')">
-            <img src="/picture/notion/management.jpg" alt="Management">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">Management</h2>
-                <p class="text-sm">Development Tools</p>
-            </div>
-        </button>
-
-        <button class="menu-button" onclick="showMenu('development-menu')">
-            <img src="/picture/notion/development.webp" alt="Development">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">Development</h2>
-                <p class="text-sm">Development Section</p>
-            </div>
-        </button>
-
-        <button class="menu-button" onclick="showMenu('handon-menu')">
-            <img src="/picture/notion/handon.jpg" alt="Hand-On">
-            <div class="p-4">
-                <h2 class="text-lg font-bold">Hand-On</h2>
-                <p class="text-sm">Practical Learning</p>
-            </div>
-        </button>
+        <div class="menu-container">
+            <button class="menu-button" onclick="showMenu('devops-menu')">
+                <img src="/picture/notion/devops.jpg" alt="Hand-On">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">DevOps</h2>
+                    <p class="text-sm">What is devops?</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('os-menu')">
+                <img src="/picture/notion/os.jpeg" alt="OS">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">OS</h2>
+                    <p class="text-sm">Operating Systems</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('server-menu')">
+                <img src="/picture/notion/server.jpg" alt="Server">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Server</h2>
+                    <p class="text-sm">Cloud and Network</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('management-menu')">
+                <img src="/picture/notion/management.jpg" alt="Management">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Management</h2>
+                    <p class="text-sm">Development Tools</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('development-menu')">
+                <img src="/picture/notion/development.png" alt="Development">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Development</h2>
+                    <p class="text-sm">Development Section</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('handon-menu')">
+                <img src="/picture/notion/handon.jpg" alt="Hand-On">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Hand-On</h2>
+                    <p class="text-sm">Practical Learning</p>
+                </div>
+            </button>
+        </div>
     </div>
-</div>
+</section>
 
 <div id="submenu-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" onclick="closeMenu()">
     <div class="bg-white rounded-lg" onclick="event.stopPropagation()" style="width: 90%; max-width: 1600px; padding: 40px;">
@@ -182,7 +181,7 @@
 <script>
     const menuData = {
         "devops-menu": [
-            { title: "DevOps", image: "/picture/notion/devops.png", url: "https://sable-mars-102.notion.site/DevOps-17ccb42f28df808e8aa0fa4c2fd75c0d?pvs=4"}
+            { title: "DevOps", image: "/picture/notion/item/도둑.jpg", url: "https://sable-mars-102.notion.site/DevOps-17ccb42f28df808e8aa0fa4c2fd75c0d?pvs=4"}
         ],
         "os-menu": [
             { title: "Linux", image: "/picture/notion/item/linux.png", url: "https://sable-mars-102.notion.site/Linux-17ccb42f28df80cd8f87c2eced608f8a?pvs=4" },
