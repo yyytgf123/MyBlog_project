@@ -6,116 +6,116 @@
     <title>My Website</title>
     <link href="/css/tailwind-out.css" rel="stylesheet">
     <link href="/css/loginpage.css" rel="stylesheet">
+    <link href="/css/notionPage.css" rel="stylesheet">
     <th:block th:replace="fragments/header2 :: header2"></th:block>
-    <style>
-        .logo-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background-image: url('/picture/notion/Notion-logo.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            opacity: 1;
-            pointer-events: auto;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+<!--    <style>-->
+    <!--    .logo-container {-->
+    <!--        position: absolute;-->
+    <!--        top: 50%;-->
+    <!--        left: 50%;-->
+    <!--        transform: translate(-50%, -50%);-->
+    <!--        width: 600px;-->
+    <!--        height: 600px;-->
+    <!--        background-size: contain;-->
+    <!--        background-repeat: no-repeat;-->
+    <!--        background-position: center;-->
+    <!--        cursor: pointer;-->
+    <!--        opacity: 1;-->
+    <!--        pointer-events: auto;-->
+    <!--        transition: opacity 0.3s ease, transform 0.3s ease;-->
+    <!--    }-->
 
-        .logo-container.hidden {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.9);
-            pointer-events: none;
-        }
+    <!--    .logo-container.hidden {-->
+    <!--        opacity: 0;-->
+    <!--        transform: translate(-50%, -50%) scale(0.9);-->
+    <!--        pointer-events: none;-->
+    <!--    }-->
 
-        .logo-container:hover {
-            transform: translate(-50%, -50%) scale(1.05);
-        }
+    <!--    .logo-container:hover {-->
+    <!--        transform: translate(-50%, -50%) scale(1.05);-->
+    <!--    }-->
 
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            width: 100%;
-            max-width: 1300px;
-            margin: auto;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            pointer-events: none;
-        }
+    <!--    .menu-container {-->
+    <!--        display: grid;-->
+    <!--        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));-->
+    <!--        gap: 50px;-->
+    <!--        width: 100%;-->
+    <!--        max-width: 1300px;-->
+    <!--        margin: auto;-->
+    <!--        opacity: 0;-->
+    <!--        transform: translateY(20px);-->
+    <!--        transition: opacity 0.5s ease, transform 0.5s ease;-->
+    <!--        pointer-events: none;-->
+    <!--    }-->
 
-        .menu-container.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
+    <!--    .menu-container.active {-->
+    <!--        opacity: 1;-->
+    <!--        transform: translateY(0);-->
+    <!--        pointer-events: auto;-->
+    <!--    }-->
 
-        .menu-button {
-            width: 100%;
-            height: 300px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
+    <!--    .menu-button {-->
+    <!--        width: 100%;-->
+    <!--        height: 300px;-->
+    <!--        background: white;-->
+    <!--        border-radius: 8px;-->
+    <!--        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);-->
+    <!--        transition: transform 0.3s ease;-->
+    <!--    }-->
 
-        .menu-button img {
-            width: 100%;
-            height: 230px;
-            object-fit: cover;
-            border-radius: 8px 8px 0 0;
-        }
+    <!--    .menu-button img {-->
+    <!--        width: 100%;-->
+    <!--        height: 230px;-->
+    <!--        object-fit: cover;-->
+    <!--        border-radius: 8px 8px 0 0;-->
+    <!--    }-->
 
-        .menu-button:hover {
-            transform: scale(1.05);
-        }
+    <!--    .menu-button:hover {-->
+    <!--        transform: scale(1.05);-->
+    <!--    }-->
 
-        #submenu-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    <!--    #submenu-content {-->
+    <!--        display: flex;-->
+    <!--        justify-content: center;-->
+    <!--        align-items: center;-->
 
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            width: 100%;
-            max-width: 1600px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-        }
+    <!--        grid-template-columns: repeat(4, 1fr);-->
+    <!--        gap: 30px;-->
+    <!--        width: 100%;-->
+    <!--        max-width: 1600px;-->
+    <!--        margin: auto;-->
+    <!--        padding: 20px;-->
+    <!--        background: white;-->
+    <!--        border-radius: 10px;-->
+    <!--        justify-content: center;-->
+    <!--        align-items: center;-->
+    <!--    }-->
 
-        #submenu-content > div:hover {
-            transform: scale(1.05);
-        }
+    <!--    #submenu-content > div:hover {-->
+    <!--        transform: scale(1.05);-->
+    <!--    }-->
 
-        #submenu-content img {
-            width: 120%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+    <!--    #submenu-content img {-->
+    <!--        width: 120%;-->
+    <!--        height: 200px;-->
+    <!--        object-fit: cover;-->
+    <!--        border-radius: 8px;-->
+    <!--        margin-bottom: 20px;-->
+    <!--    }-->
 
-        #submenu-content h2 {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-align: center;
-        }
+    <!--    #submenu-content h2 {-->
+    <!--        font-size: 1.4rem;-->
+    <!--        font-weight: bold;-->
+    <!--        margin-bottom: 5px;-->
+    <!--        text-align: center;-->
+    <!--    }-->
 
-        #submenu-content p {
-            font-size: 1.2rem;
-            text-align: center;
-            color: gray;
-        }
-    </style>
+    <!--    #submenu-content p {-->
+    <!--        font-size: 1.2rem;-->
+    <!--        text-align: center;-->
+    <!--        color: gray;-->
+    <!--    }-->
+    <!--</style>-->
 </head>
 <body>
 <section class="flex justify-center relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 full-height">
@@ -123,7 +123,7 @@
     <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
 
     <div class="h-auto min-h-screen">
-        <div class="logo-container"></div>
+        <div class="logo-container" id="logo-container"></div>
 
         <div class="menu-container">
             <button class="menu-button" onclick="showMenu('devops-menu')">
@@ -180,6 +180,9 @@
 
 <script>
     const menuData = {
+        "default-logo": [
+            { image: "/picture/notion/notion-logo.png" }
+        ],
         "devops-menu": [
             { title: "DevOps", image: "/picture/notion/item/도둑.jpg", url: "https://sable-mars-102.notion.site/DevOps-17ccb42f28df808e8aa0fa4c2fd75c0d?pvs=4"}
         ],
@@ -204,6 +207,12 @@
         ],
     };
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const defaultLogo = menuData["default-logo"][0].image;
+        const logoContainer = document.getElementById('logo-container');
+        logoContainer.style.backgroundImage = `url(${defaultLogo})`;
+    });
+
     document.querySelector('.logo-container').addEventListener('click', function() {
         animateLogoAndShowMenu();
     });
@@ -219,7 +228,24 @@
         }, 300);
     }
 
+    // 페이지 로드 시 기본 로고 설정
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultLogo = menuData["default-logo"][0].image;
+        const logoContainer = document.getElementById('logo-container');
+        logoContainer.style.backgroundImage = `url(${defaultLogo})`;
+    });
+
+    // 특정 메뉴 클릭 시 로고 변경 함수
+    function setLogoBackground(menuId) {
+        const logoContainer = document.getElementById('logo-container');
+        if (menuData[menuId] && menuData[menuId][0]) {
+            const imageUrl = menuData[menuId][0].image;
+            logoContainer.style.backgroundImage = `url(${imageUrl})`;
+        }
+    }
+
     function showMenu(menuId) {
+        setLogoBackground(menuId);
         const menuItems = menuData[menuId] || [];
         const submenuContent = document.getElementById('submenu-content');
         submenuContent.innerHTML = "";
