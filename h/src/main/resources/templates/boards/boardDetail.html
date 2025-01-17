@@ -12,14 +12,17 @@
 <body class="bg-gray-50 text-gray-900">
 
 <!-- 중앙 정렬을 위한 Wrapper -->
-<div class="max-w-4xl mx-auto px-4">
+<div class="max-w-4xl mx-auto px-4 mt-8">
 
     <!-- 공통 헤더 -->
     <header class="py-5 border-b border-gray-300">
-        <h1 class="text-2xl font-bold" th:text="${board.title}">제목</h1>
-        <div class="text-sm text-gray-600 mt-1">
+        <h1 class="flex justify-center text-2xl font-bold" th:text="${board.title}">제목</h1>
+        <div class="flex justify-end text-sm text-gray-600 mt-1">
             <p><strong>작성자:</strong> <span th:text="${board.writer}">작성자</span></p>
+        </div>
+        <div class="flex justify-end text-sm text-gray-600 mt-1">
             <p><strong>작성일:</strong> <span th:text="${board.createdDate}">작성일</span></p>
+
         </div>
     </header>
 

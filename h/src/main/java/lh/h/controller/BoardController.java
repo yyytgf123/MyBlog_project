@@ -102,7 +102,7 @@ public class BoardController {
 
         //------------------------------ title not null -----------------------------------//
         if (bindingResult.hasErrors()) {
-            model.addAttribute("errorMessage", "입력 값이 올바르지 않습니다. 다시 확인해주세요.");
+            model.addAttribute("errorMessage", "제목은 필수입니다. 다시 확인해주세요.");
             return "boards/form";
         }
         //---------------------------------------------------------------------------------//
