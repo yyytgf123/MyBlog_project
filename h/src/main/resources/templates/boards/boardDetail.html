@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,35 +9,59 @@
 
     <title th:text="${board.title}">게시물 상세 보기</title>
 </head>
+<body class="bg-gray-50 text-gray-900">
 
-<body>
-    <h1 th:text="${board.title}">제목</h1>
-    <p><strong>작성자:</strong> <span th:text="${board.writer}"></span></p>
-    <p><strong>작성일:</strong> <span th:text="${board.createdDate}"></span></p>
+<!-- 중앙 정렬을 위한 Wrapper -->
+<div class="max-w-4xl mx-auto px-4">
 
-    <!------ 파일 업로드 ------>
-    <div>
-        <img th:src="@{/files/{filename}(filename=${board.filename})}" alt="첨부 이미지" style="max-width: 600px;">
-    </div>
-    <!---------------------->
+    <!-- 공통 헤더 -->
+    <header class="py-5 border-b border-gray-300">
+        <h1 class="text-2xl font-bold" th:text="${board.title}">제목</h1>
+        <div class="text-sm text-gray-600 mt-1">
+            <p><strong>작성자:</strong> <span th:text="${board.writer}">작성자</span></p>
+            <p><strong>작성일:</strong> <span th:text="${board.createdDate}">작성일</span></p>
+        </div>
+    </header>
 
-    <p><strong>내용:</strong></p>
+    <!-- 파일 업로드 섹션 -->
+    <section class="py-5">
+        <div class="flex justify-center">
+            <img th:src="@{/files/{filename}(filename=${board.filename})}"
+                 alt="첨부 이미지"
+                 class="max-w-full rounded-md shadow-md">
+        </div>
+    </section>
 
-    <!----- 게시글 수정 ------>
-    <td>
+    <!-- 게시글 내용 -->
+    <section class="py-5">
+        <div class="block rounded-md bg-white px-3 py-4 text-base text-gray-900
+                        outline outline-1 -outline-offset-1 outline-gray-300
+                        focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
+             style="word-wrap: break-word; word-break: break-word;">
+            <span th:text="${board.content}">게시글 내용</span>
+        </div>
+    </section>
+
+    <!-- 버튼 섹션 -->
+    <section class="py-5 flex justify-end gap-4">
+        <!-- 수정 버튼 -->
         <form th:action="@{/boards/boardDetail/boardUpdate/{id}(id=${board.id})}" method="get">
-            <button type="submit">수정</button>
+            <button type="submit"
+                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                수정
+            </button>
         </form>
-    </td>
-    <!---------------------->
 
-    <!----- 게시글 삭제 ------>
-    <td>
+        <!-- 삭제 버튼 -->
         <form th:action="@{/boards/{id}(id=${board.id})}" method="post">
             <input type="hidden" name="_method" value="delete" />
-            <button type="submit">삭제</button>
+            <button type="submit"
+                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                삭제
+            </button>
         </form>
-    </td>
-    <!------------------->
+    </section>
+</div>
+
 </body>
 </html>

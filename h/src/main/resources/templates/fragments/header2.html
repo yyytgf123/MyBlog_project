@@ -1,3 +1,17 @@
+<style>
+    /* 스크롤 시 고정 */
+    .header {
+        position: fixed; /* 화면 상단에 고정 */
+        top: 0;
+        left: 0;
+        width: 100%; /* 화면 너비에 맞춤 */
+        z-index: 1000; /* 다른 요소 위에 표시 */
+        background-color: #333; /* 배경색 */
+        color: white; /* 텍스트 색상 */
+        padding: 10px 20px; /* 여백 */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 하단 그림자 */
+    }
+</style>
 <div th:fragment="header2">
 <nav class="bg-gray-800">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -27,16 +41,17 @@
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div class="flex shrink-0 items-center">
-                    <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                    <a href="/">
+                        <img class="h-8 w-auto" src="/picture/homeimage.png" alt="Your Company">
+                    </a>
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/boards/blogpage" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Article</a>
-                        <a href="/" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
+                        <a href="/boards/blogpage" class="rounded-md text-gray-300 hover:bg-gray-700  px-3 py-2 text-sm font-medium text-white" aria-current="page">Article</a>
                         <a href="/about/aboutpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
                         <a href="/notion/notionpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Notion</a>
-                        <a href="/ai/openai" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">OpenAI</a>
+                        <a href="/ai/openAIPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">OpenAI</a>
                     </div>
                 </div>
             </div>
