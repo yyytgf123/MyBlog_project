@@ -5,6 +5,7 @@
     <title>로그인 및 회원가입</title>
     <link href="/css/tailwind-out.css" rel="stylesheet">
     <link href="/css/userPage.css" rel="stylesheet">
+
 </head>
 <body>
 <!-- home icon -->
@@ -16,13 +17,12 @@
     </div>
 </header>
 
-<!-- login js -->
 <script src="/js/userPage.js" defer></script>
 
-<div class="container right-panel-active">
-    <!-- Sign Up -->
+<div class="container right-panel-active" id="container">
+    <!-- 회원가입 -->
     <div class="container__form container--signup">
-        <form th:action="@{/user/signin}" th:object="${memberCreateForm}" method="post" class="form">
+        <form th:action="@{/user/signup}" th:object="${memberCreateForm}" method="post" class="form">
             <h2 class="form__title">Sign Up</h2>
             <div class="input">
                 <input type="text" id="username" th:field="*{username}" placeholder="Id" />
@@ -44,17 +44,22 @@
         </form>
     </div>
 
-    <!-- Sign In -->
+    <!-- 로그인 -->
     <div class="container__form container--signin">
-        <form action="/" class="form" id="form2">
+        <form th:action="@{/user/login}" method="post" class="form">
             <h2 class="form__title">Sign In</h2>
-            <input type="email" placeholder="Email" class="input" />
-            <input type="password" placeholder="Password" class="input" />
-            <button class="btn">Sign In</button>
+            <div class="input">
+                <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <div class="input">
+                <input type="password" name="password" placeholder="Password" required />
+            </div>
+            <button class="btn" type="submit">Sign In</button>
+            <div th:if="${error}" th:text="${error}" style="color:red;"></div>
         </form>
     </div>
 
-    <!-- Overlay -->
+    <!-- 전환 버튼 -->
     <div class="container__overlay">
         <div class="overlay">
             <div class="overlay__panel overlay--left">
@@ -66,5 +71,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
