@@ -5,10 +5,9 @@
     <title>로그인 및 회원가입</title>
     <link href="/css/tailwind-out.css" rel="stylesheet">
     <link href="/css/userPage.css" rel="stylesheet">
-
 </head>
 <body>
-<!-- home icon -->
+<!-- Home Icon -->
 <header class="absolute inset-x-0 top-0 z-50">
     <div class="flex justify-center mt-8">
         <a href="/">
@@ -17,45 +16,59 @@
     </div>
 </header>
 
+<!-- JavaScript -->
 <script src="/js/userPage.js" defer></script>
 
 <div class="container right-panel-active" id="container">
     <!-- 회원가입 -->
     <div class="container__form container--signup">
-        <form th:action="@{/user/signup}" th:object="${memberCreateForm}" method="post" class="form">
+        <form id="form1" th:action="@{/user/signup}" th:object="${memberFormDto}" method="post" class="form" role="form">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
             <h2 class="form__title">Sign Up</h2>
+
             <div class="input">
-                <input type="text" id="username" th:field="*{username}" placeholder="Id" />
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+                <input type="text" id="name" th:field="*{name}" placeholder="Name" required />
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></div>
             </div>
+
             <div class="input">
-                <input type="email" id="email" th:field="*{email}" placeholder="Email" />
+                <input type="email" id="email" th:field="*{email}" placeholder="Email" required />
                 <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
             </div>
+
             <div class="input">
-                <input type="password" id="password1" th:field="*{password1}" placeholder="Password" />
-                <div th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}" class="error"></div>
+                <input type="password" id="password" th:field="*{password}" placeholder="Password" required />
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
             </div>
+
             <div class="input">
-                <input type="password" id="password2" th:field="*{password2}" placeholder="Confirm Password" />
-                <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}" class="error"></div>
+                <input type="text" id="address" th:field="*{address}" placeholder="Address" />
+                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error"></div>
             </div>
+            <div th:if="${errorMessage}" th:text="${errorMessage}" class="error" style="color:red;"></div>
+
             <button class="btn" type="submit">Sign Up</button>
+
         </form>
     </div>
 
     <!-- 로그인 -->
     <div class="container__form container--signin">
-        <form th:action="@{/user/login}" method="post" class="form">
+        <form id="form2" th:action="@{/user/login}" method="post" class="form">
             <h2 class="form__title">Sign In</h2>
+
             <div class="input">
                 <input type="email" name="email" placeholder="Email" required />
             </div>
+
             <div class="input">
                 <input type="password" name="password" placeholder="Password" required />
             </div>
+
+            <div th:if="${error}" th:text="${error}" class="error" style="color:red;"></div>
+
             <button class="btn" type="submit">Sign In</button>
-            <div th:if="${error}" th:text="${error}" style="color:red;"></div>
         </form>
     </div>
 

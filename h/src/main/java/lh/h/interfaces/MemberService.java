@@ -8,11 +8,7 @@ import javax.swing.*;
 
 public interface MemberService {
 
-    Member create(String username, String email, String JPasswordField);
+    Member saveMember(Member member);
 
-    Member login(String email, String password);
-
-    void logout(String email);
-
-    boolean isLoggedIn(String email);
+    void validateDuplicateMember(Member member);
 }

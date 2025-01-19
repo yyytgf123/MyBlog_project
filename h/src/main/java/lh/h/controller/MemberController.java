@@ -1,10 +1,11 @@
 package lh.h.controller;
 
 import jakarta.validation.Valid;
+import lh.h.dto.MemberFormDto;
 import lh.h.entity.Member;
-import lh.h.entity.MemberCreateForm;
 import lh.h.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,41 +17,28 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
-    // 회원가입 및 로그인 페이지
-    @GetMapping("/signin")
-    public String showSignInPage(MemberCreateForm memberCreateForm, Model model) {
-        return "user/signin";
+    @GetMapping("/userPage")
+    public String memberForm(Model model) {
+        model.addAttribute("memberFormDto", new MemberFormDto());
+        return "user/userPage";
     }
 
-    // 회원가입 처리
     @PostMapping("/signup")
-    public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult, Model model) {
+    public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "user/signin";
+            return "user/userPage";
         }
 
-        if (!memberCreateForm.getPassword1().equals(memberCreateForm.getPassword2())) {
-            bindingResult.rejectValue("password2", "passwordInCorrect", "Passwords do not match.");
-            return "user/signin";
-        }
-
-        memberService.create(memberCreateForm.getUsername(), memberCreateForm.getEmail(), memberCreateForm.getPassword1());
-        model.addAttribute("successMessage", "Sign up successful. Please log in.");
-        return "user/signin";
-    }
-
-    // 로그인 처리
-    @PostMapping("/login")
-    public String login(@RequestParam String email,
-                        @RequestParam String password, Model model) {
         try {
-            Member member = memberService.login(email, password);
-            model.addAttribute("member", member);
-            return "redirect:/";
-        } catch (RuntimeException e) {
-            model.addAttribute("error", e.getMessage());
-            return "user/signin";
+            Member member = Member.createMember(memberFormDto, passwordEncoder);
+            memberService.saveMember(member);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "user/userPage";
         }
+
+        return "redirect:/";
     }
 }
