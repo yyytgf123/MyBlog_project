@@ -37,20 +37,21 @@
 
     <!-- 게시글 내용 -->
     <section class="py-5">
-        <div class="block rounded-md bg-white px-3 py-4 text-base text-gray-900
-                        outline outline-1 -outline-offset-1 outline-gray-300
-                        focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
+        <div class="px-3 py-4 text-base text-gray-900 sm:text-sm"
              style="word-wrap: break-word; word-break: break-word;">
             <span th:text="${board.content}">게시글 내용</span>
         </div>
     </section>
+
+    <!-- 회색 선 추가 -->
+    <hr class="border-t border-gray-300 my-4">
 
     <!-- 버튼 섹션 -->
     <section class="py-5 flex justify-end gap-4">
         <!-- 수정 버튼 -->
         <form th:action="@{/boards/boardDetail/boardUpdate/{id}(id=${board.id})}" method="get">
             <button type="submit"
-                    class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 hover:text-gray-900">
                 수정
             </button>
         </form>
@@ -59,10 +60,11 @@
         <form th:action="@{/boards/{id}(id=${board.id})}" method="post">
             <input type="hidden" name="_method" value="delete" />
             <button type="submit"
-                    class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                    class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-red-100 hover:text-red-700">
                 삭제
             </button>
         </form>
+
     </section>
 </div>
 

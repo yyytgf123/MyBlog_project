@@ -59,8 +59,6 @@ public class SecurityConfig {
                         .requestMatchers("/boards/boardDetail/boardUpdate/**", "/boards/form").hasRole("ADMIN") // ADMIN만 접근 가능
                         .anyRequest().permitAll() // 다른 모든 요청은 허용
                 );
-
-
         return http.build();
     }
 

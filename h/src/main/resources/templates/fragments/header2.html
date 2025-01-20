@@ -1,4 +1,4 @@
-<div th:fragment="header2">
+<div th:fragment="header2" xmlns:sec="http://www.w3.org/1999/xhtml">
 <nav class="bg-gray-800">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
@@ -60,8 +60,16 @@
                          role="menu" aria-orientation="vertical"
                          aria-labelledby="user-menu-button" tabindex="-1">
                         <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                        <a href="/user/userPage" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Login</a>
+                        <!-- 로그인 상태라면 로그아웃 버튼 -->
+                        <form th:action="@{/user/logout}" method="post" sec:authorize="isAuthenticated()">
+                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
+                                Logout
+                            </button>
+                        </form>
+                        <!-- 로그아웃 상태라면 로그인 버튼 -->
+                        <a href="/user/userPage" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2" sec:authorize="isAnonymous()">
+                            Login
+                        </a>
                     </div>
                 </div>
 
