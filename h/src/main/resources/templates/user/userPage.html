@@ -22,7 +22,7 @@
 <div class="container right-panel-active" id="container">
     <!-- 회원가입 -->
     <div class="container__form container--signup">
-        <form id="form1" th:action="@{/user/signup}" th:object="${memberFormDto}" method="post" class="form" role="form">
+        <form th:action="@{/user/signup}" th:object="${memberFormDto}" method="post" class="form" role="form">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
             <h2 class="form__title">Sign Up</h2>
@@ -55,7 +55,7 @@
 
     <!-- 로그인 -->
     <div class="container__form container--signin">
-        <form id="form2" th:action="@{/user/login}" method="post" class="form">
+        <form th:action="@{/user/login}" method="post" class="form">
             <h2 class="form__title">Sign In</h2>
 
             <div class="input">
