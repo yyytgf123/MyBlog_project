@@ -11,4 +11,6 @@ public interface MemberService {
     Member saveMember(Member member);
 
     void validateDuplicateMember(Member member);
+
+    UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;
 }

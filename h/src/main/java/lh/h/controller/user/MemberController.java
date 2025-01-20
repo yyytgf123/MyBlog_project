@@ -1,4 +1,4 @@
-package lh.h.controller;
+package lh.h.controller.user;
 
 import jakarta.validation.Valid;
 import lh.h.dto.MemberFormDto;
@@ -45,5 +45,15 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/loginError")
+    public String loginError() {
+        return "user/loginError";
+    }
+
+    @GetMapping("/accessError")
+    public String accessErrorPage() {
+        return "user/accessError";
     }
 }
