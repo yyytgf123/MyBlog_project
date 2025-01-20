@@ -32,7 +32,7 @@ public class Member {
     private MemberRole role;
 
     @Builder
-    public Member(String name, String password, String email, String address, MemberRole role) {
+    public Member(String name, String email, String password, String address, MemberRole role) {
         this.name = name;
         this.password = password;
         this.email = email;

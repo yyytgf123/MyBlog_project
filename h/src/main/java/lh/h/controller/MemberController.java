@@ -28,6 +28,11 @@ public class MemberController {
     @PostMapping("/signup")
     public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+
             return "user/userPage";
         }
 
