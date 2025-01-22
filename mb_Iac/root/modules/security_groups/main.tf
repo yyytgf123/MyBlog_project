@@ -7,12 +7,8 @@ terraform {
   }
 }
 
-module "vpc" {
-  source = "../vpc"
-}
-
 resource "aws_security_group" "mb_security_group" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id //module + module 명 + vpc/output 명
 
   ingress {
     from_port = 22
