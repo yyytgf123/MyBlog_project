@@ -101,7 +101,7 @@ resource "aws_internet_gateway" "mb_internet_gateway" {
 
 /*----- Nat gateway -----*/
 resource "aws_nat_gateway" "mb_nat_gateway" {
-  allocation_id = aws_eip.mb_eip.id
+  allocation_id = aws_eip.mb_nat_gateway_eip.id
   subnet_id = aws_subnet.mb_public_subnet[0].id
 
   tags = {
@@ -109,11 +109,11 @@ resource "aws_nat_gateway" "mb_nat_gateway" {
   }
 }
 
-resource "aws_eip" "mb_eip" {
+resource "aws_eip" "mb_nat_gateway_eip" {
   vpc = true
 
   tags = {
-    Name = "mb_nat_gateway"
+    Name = "mb_nat_gateway_eip"
   }
 }
 /*----------------------------*/
