@@ -22,7 +22,7 @@
       from_port = 80
       to_port = 80
       protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      security_groups = [aws_security_group.mb_alb_security_group.id]
     }
 
     ingress {
@@ -33,16 +33,23 @@
     }
 
     ingress {
-      from_port = 8083
-      to_port   = 8083
-      protocol  = "tcp"
+      from_port = 3306
+      to_port = 3306
+      protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
 
     ingress {
-      from_port = 3306
-      to_port = 3306
+      from_port = 8080
+      to_port = 8080
       protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      from_port = 8083
+      to_port   = 8083
+      protocol  = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
 
@@ -66,7 +73,33 @@
   }
   /*-------------------*/
 
-  /*------ private ec2 sg -----*/
+  /*----- alb ec2 sg -----*/
+  resource "aws_security_group" "mb_alb_security_group" {
+    vpc_id = var.vpc_id
+
+    ingress {
+      from_port = 80
+      to_port = 80
+      protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      from_port = 443
+      to_port = 443
+      protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress {
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  /*------ bastion ec2 sg -----*/
   resource "aws_security_group" "mb_bastion_security_group" {
     vpc_id = var.vpc_id
 

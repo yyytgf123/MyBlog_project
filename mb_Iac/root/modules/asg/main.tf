@@ -16,6 +16,8 @@ resource "aws_autoscaling_group" "mb_autoscaling" {
 
   vpc_zone_identifier = var.eks_private_subnet_ids
 
+  target_group_arns = [var.mb_alb_tg]
+
   max_size = 3
   min_size = 1
   desired_capacity = 2

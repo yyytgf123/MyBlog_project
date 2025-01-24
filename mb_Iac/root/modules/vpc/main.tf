@@ -36,9 +36,9 @@ resource "aws_subnet" "mb_public_subnet" {
 
 resource "aws_subnet" "mb_private_subnet" {
   vpc_id = aws_vpc.mb_vpc.id
-  count = length(var.availability_zone)
+  count = length(var.availability_zone) * 2
   cidr_block = cidrsubnet("10.0.0.0/16", 8, count.index + 2)
-  availability_zone = var.availability_zone[count.index]
+  availability_zone = var.availability_zone[floor(count.index / 2)]
 
   tags = {
     Name = "mb_private_subnet${count.index + 1}"
@@ -46,6 +46,7 @@ resource "aws_subnet" "mb_private_subnet" {
     "kubernetes.io/role/internal-elb"      = "1"
   }
 }
+/*----------------------*/
 
 /*----- routing table -----*/
 resource "aws_route_table" "mb_public_routing_table" {

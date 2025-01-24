@@ -25,8 +25,8 @@ module "ec2" {
   source = "./modules/ec2"
   bastion_security_group_id = module.security_groups.bastion_security_group_id
   private_security_group_id = module.security_groups.private_security_group_id
-  public_subnet_id = module.vpc.public_subnet_ids
-  private_subnet_id = module.vpc.private_subnet_ids
+  public_subnet_id = module.vpc.public_subnet_id
+  private_subnet_id = module.vpc.private_subnet_id
   eks_workernode_role = module.iam.eks_workernode_role
 }
 
@@ -53,9 +53,12 @@ module "asg" {
   mb_ec2_launch_template = module.ec2.mb_ec2_launch_template
   mb_eks_cluster = module.eks.mb_eks_cluster
   eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
+  mb_alb_tg = module.alb.mb_alb_tg
 }
 
-# module "eni" {
-#   source = "./modules/eni"
-#
-# }
+module "alb" {
+  source = "./modules/alb"
+  vpc_id = module.vpc.vpc_id
+  alb_security_group_id = module.security_groups.alb_security_group
+  public_subnet_ids = module.vpc.public_subnet_ids
+}

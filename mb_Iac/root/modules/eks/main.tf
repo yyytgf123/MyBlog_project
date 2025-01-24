@@ -12,7 +12,7 @@ resource "aws_eks_cluster" "mb_eks_cluster" {
   name     = "mb_eks_cluster"
 
   role_arn = var.eks_cluster_role
-  version = "1.27"
+  version = "1.31"
 
   vpc_config {
     subnet_ids = var.eks_private_subnet_ids

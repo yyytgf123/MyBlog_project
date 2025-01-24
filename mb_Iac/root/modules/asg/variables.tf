@@ -9,3 +9,7 @@ variable "mb_eks_cluster" {
 variable "eks_private_subnet_ids" {
   type = list(string)
 }
+
+variable "mb_alb_tg" {
+  type = string
+}
