@@ -13,3 +13,7 @@ variable "bastion_security_group_id" {
 variable "private_security_group_id" {
   type = string
 }
+
+variable "eks_workernode_role" {
+  type = string
+}

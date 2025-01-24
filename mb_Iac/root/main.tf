@@ -27,10 +27,35 @@ module "ec2" {
   private_security_group_id = module.security_groups.private_security_group_id
   public_subnet_id = module.vpc.public_subnet_ids
   private_subnet_id = module.vpc.private_subnet_ids
+  eks_workernode_role = module.iam.eks_workernode_role
 }
 
-module "route53" {
-  source = "./modules/route53"
-  bastion_ec2_ip = module.ec2.bastion_ec2_ip
-  private_ec2_ip = module.ec2.private_ec2_ip
+# module "route53" {
+#   source = "./modules/route53"
+#   bastion_ec2_ip = module.ec2.bastion_ec2_ip
+#   # private_ec2_ip = module.ec2.private_ec2_ip
+# }
+
+module "iam" {
+  source = "./modules/iam"
 }
+
+module "eks" {
+  source = "./modules/eks"
+  vpc_id = module.vpc.vpc_id
+  eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
+  eks_cluster_role = module.iam.eks_cluster_role
+  eks_workernode_role = module.iam.eks_workernode_role
+}
+
+module "asg" {
+  source = "./modules/asg"
+  mb_ec2_launch_template = module.ec2.mb_ec2_launch_template
+  mb_eks_cluster = module.eks.mb_eks_cluster
+  eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
+}
+
+# module "eni" {
+#   source = "./modules/eni"
+#
+# }

@@ -7,42 +7,70 @@ terraform {
   }
 }
 
-/*----- private ec2 eip -----*/
-resource "aws_eip" "mb_private_ec2" {
-  instance = aws_instance.mb_ec2.id
-
-  tags = {
-    Name = "mb_private_ec2_eip"
-  }
-}
-
-/*----- private ec2 + eip -----*/
-resource "aws_eip_association" "mb_private_ec2_eip" {
-  instance_id = aws_instance.mb_ec2.id
-  allocation_id = aws_eip.mb_private_ec2.id
-}
+/*---------------------------------------------------*/
+# /*----- private ec2 eip -----*/
+# resource "aws_eip" "mb_private_ec2" {
+#   count = length(aws_instance.mb_ec2)
+#
+#   instance = aws_instance.mb_ec2[count.index].id
+#
+#   tags = {
+#     Name = "mb_private_ec2_eip_${count.index}"
+#   }
+# }
+#
+# /*----- private ec2 + eip -----*/
+# resource "aws_eip_association" "mb_private_ec2_eip" {
+#   count = length(aws_instance.mb_ec2)
+#
+#   instance_id = aws_instance.mb_ec2[count.index].id
+#   allocation_id = aws_eip.mb_private_ec2[count.index].id
+# }
 
 /*----- private subnet ec2 -----*/
-resource "aws_instance" "mb_ec2" {
-  ami           = data.aws_ami.ubuntu.id
-  subnet_id     = var.private_subnet_id
+resource "aws_launch_template" "mb_ec2_launch_template" {
+  name_prefix = "mb_ec2_launch_template"
+  image_id = data.aws_ami.ubuntu.id
   key_name      = "myblog"
   instance_type = "t2.micro"
-  security_groups = [var.private_security_group_id] //security_group은 list or set 구조 필요
 
-  ebs_block_device {
-    device_name = "/dev/sda1"
-    volume_size = "30"
-    volume_type = "gp3"
+  network_interfaces { // launch_template에서는 network_interface에 감싸줘야함
+    security_groups = [var.private_security_group_id]
   }
 
-  tags = {
-    Name = "mb_private_ec2"
+  iam_instance_profile {
+    name = aws_iam_instance_profile.eks_worker_node_profile.name
+  }
+
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size = "30"
+      volume_type = "gp3"
+    }
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "mb_private_ec2"
+    }
   }
 }
-
 /*-------------------------------*/
 
+/*----- private subnet ec2 instance profile --------*/
+resource "aws_iam_instance_profile" "eks_worker_node_profile" {
+  name = "eks_worker_node_profile"
+  role = var.eks_workernode_role
+}
+/*--------------------------------------------------*/
+/*---------------------------------------------------*/
+
+
+/*-------------------------------------------------*/
 /*----- bastion ec2 eip -----*/
 resource "aws_eip" "mb_ec2_eip" {
   instance = aws_instance.mb_bastion_ec2.id
@@ -51,14 +79,14 @@ resource "aws_eip" "mb_ec2_eip" {
     Name = "mb_bastion_ec2_eip"
   }
 }
-/*------------------*/
+/*---------------------------*/
 
 /*----- bastion ec2 + eip -----*/
 resource "aws_eip_association" "mb_bastion_ec2_eip" {
   instance_id = aws_instance.mb_bastion_ec2.id
   allocation_id = aws_eip.mb_ec2_eip.id
 }
-/*---------------------*/
+/*-----------------------------*/
 
 /*----- Bastion EC2 -----*/
 resource "aws_instance" "mb_bastion_ec2" {
@@ -78,3 +106,5 @@ resource "aws_instance" "mb_bastion_ec2" {
     Name = "mb_bastion_ec2"
   }
 }
+/*------------------------*/
+/*-------------------------------------------------*/
