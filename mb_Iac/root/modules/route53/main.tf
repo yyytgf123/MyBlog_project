@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+/*----- route53 -----*/
 resource "aws_route53_zone" "mb_route53_zone" {
   force_destroy = true
   name = "cbnu.store"
@@ -16,16 +17,11 @@ resource "aws_route53_record" "mb_route53_a_record" {
   name    = "www.cbnu.store"
   type    = "A"
   zone_id = aws_route53_zone.mb_route53_zone.zone_id
-  ttl = 300
+  # ttl = 300
 
-  records = [var.private_ec2_ip]
+  alias { // alb - A record -> Alias로 생성
+    evaluate_target_health = false
+    name                   = var.alb_dn
+    zone_id                = var.alb_zone_id
+  }
 }
-
-# resource "aws_route53_zone" "mb_route53_ns_record" {
-#   name = "cbnu.store"
-#   type = "NS"
-#   zone_id = aws_route53_zone.mb_route53_zone.id
-#   ttl = 172800
-#
-#
-# }

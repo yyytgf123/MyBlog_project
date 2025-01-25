@@ -1,3 +1,4 @@
+/* -- az -- */
 variable "availability_zone" {
   description = "AZ Setting"
   type = list(string)
