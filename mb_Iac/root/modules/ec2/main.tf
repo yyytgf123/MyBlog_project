@@ -28,52 +28,52 @@ terraform {
 # }
 
 /*----- private subnet ec2 -----*/
-resource "aws_launch_template" "mb_ec2_launch_template" {
-  name_prefix = "mb_ec2_launch_template"
-  image_id = data.aws_ami.ubuntu.id
-  key_name      = "myblog"
-  instance_type = "t2.micro"
-
-  network_interfaces { // launch_template에서는 network_interface에 감싸줘야함
-    security_groups = [var.private_security_group_id]
-  }
-
-  iam_instance_profile {
-    name = aws_iam_instance_profile.eks_worker_node_profile.name
-  }
-
-  block_device_mappings {
-    device_name = "/dev/sda1"
-
-    ebs {
-      volume_size = "30"
-      volume_type = "gp3"
-    }
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-
-    tags = {
-      Name = "mb_private_ec2"
-    }
-  }
-
-  user_data = base64encode(<<EOF
-    #!/bin/bash
-    set -o xtrace
-    /etc/eks/bootstrap.sh ${var.eks_cluster_name}
-  EOF
-  )
-
-}
+# resource "aws_launch_template" "mb_ec2_launch_template" {
+#   name_prefix = "mb_ec2_launch_template"
+#   image_id = data.aws_ami.ubuntu.id
+#   key_name      = "myblog"
+#   instance_type = "t2.micro"
+#
+#   network_interfaces { // launch_template에서는 network_interface에 감싸줘야함
+#     security_groups = [var.private_security_group_id]
+#   }
+#
+#   iam_instance_profile {
+#     name = aws_iam_instance_profile.eks_worker_node_profile.name
+#   }
+#
+#   block_device_mappings {
+#     device_name = "/dev/sda1"
+#
+#     ebs {
+#       volume_size = "30"
+#       volume_type = "gp3"
+#     }
+#   }
+#
+#   tag_specifications {
+#     resource_type = "instance"
+#
+#     tags = {
+#       Name = "mb_private_ec2"
+#     }
+#   }
+#
+#   user_data = base64encode(<<EOF
+#     #!/bin/bash
+#     set -o xtrace
+#     /etc/eks/bootstrap.sh ${var.eks_cluster_name}
+#   EOF
+#   )
+#
+# }
 /*-------------------------------*/
 
 /*----- private subnet ec2 instance profile --------*/
-resource "aws_iam_instance_profile" "eks_worker_node_profile" {
-  name = "eks_worker_node_profile"
-  role = var.eks_workernode_role
-}
+# resource "aws_iam_instance_profile" "eks_worker_node_profile" {
+#   name = "eks_worker_node_profile"
+#   role = var.eks_workernode_role
+# }
 /*--------------------------------------------------*/
 /*---------------------------------------------------*/
 

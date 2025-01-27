@@ -58,19 +58,20 @@ module "eks" {
   /* -- iam -- */
   eks_cluster_role = module.iam.eks_cluster_role
   eks_workernode_role = module.iam.eks_workernode_role
+  eks_workernode_role_arn = module.iam.eks_workernode_role_arn
 }
 
-module "asg" {
-  source = "./modules/asg"
-  /* -- vpc -- */
-  eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
-  /* -- ec2 -- */
-  mb_ec2_launch_template = module.ec2.mb_ec2_launch_template
-  /* -- eks --*/
-  mb_eks_cluster = module.eks.mb_eks_cluster_name
-  /* -- alb --  */
-  mb_alb_tg = module.alb.mb_alb_tg
-}
+# module "asg" {
+#   source = "./modules/asg"
+#   /* -- vpc -- */
+#   eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
+#   /* -- ec2 -- */
+#   mb_ec2_launch_template = module.ec2.mb_ec2_launch_template
+#   /* -- eks --*/
+#   mb_eks_cluster = module.eks.mb_eks_cluster_name
+#   /* -- alb --  */
+#   mb_alb_tg = module.alb.mb_alb_tg
+# }
 
 module "alb" {
   source = "./modules/alb"

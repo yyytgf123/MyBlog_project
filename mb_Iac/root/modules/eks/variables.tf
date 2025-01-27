@@ -16,3 +16,7 @@ variable "eks_workernode_role" {
   type = string
 }
 
+variable "eks_workernode_role_arn" {
+  type = string
+}
+
