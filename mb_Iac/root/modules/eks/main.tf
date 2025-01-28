@@ -44,7 +44,7 @@ resource "aws_eks_node_group" "mb_eks_node_group" {
   ami_type = "AL2_x86_64"
 
   disk_size = "30"
-  instance_types = ["t2.micro"]
+  instance_types = ["t3.medium"]
 }
 /*------------------------------*/
 resource "null_resource" "update_kubeconfig" {
@@ -53,3 +53,4 @@ resource "null_resource" "update_kubeconfig" {
   }
   depends_on = [aws_eks_cluster.mb_eks_cluster]
 }
+

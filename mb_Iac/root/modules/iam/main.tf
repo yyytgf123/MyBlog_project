@@ -70,3 +70,4 @@ resource "aws_iam_role_policy_attachment" "mb_eks_workernode_policy" {
   role = aws_iam_role.mb_eks_workernode_role.name
 }
 /*----------------------------------------------*/
+

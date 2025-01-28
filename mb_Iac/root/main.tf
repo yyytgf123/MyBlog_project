@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+
 provider "aws" {
   region = "ap-northeast-2"
 }
@@ -59,6 +60,8 @@ module "eks" {
   eks_cluster_role = module.iam.eks_cluster_role
   eks_workernode_role = module.iam.eks_workernode_role
   eks_workernode_role_arn = module.iam.eks_workernode_role_arn
+  /* -- eks -- */
+  cluster_name = module.eks.mb_eks_cluster_name
 }
 
 # module "asg" {
@@ -80,4 +83,32 @@ module "alb" {
   public_subnet_ids = module.vpc.public_subnet_ids
   /* -- alb -- */
   alb_security_group_id = module.security_groups.alb_security_group
+}
+
+/* -- LBC -- */
+module "sa-alc"{
+  source = "./modules/k8s_sa"
+  sa-labels = {
+    "app.kubernetes.io/component" = "controller"
+    "app.kubernetes.io/name" = "aws-load-balacner-controller"
+  }
+  sa-name = "aws-load-balancer-controller"
+  sa-namespace = "kube-system"
+  sa-annotations = {
+    "eks.amazonaws.com/role-arn" = "arn:aws:iam::047719624346:role/alb-ingress-sa-role"
+  }
+}
+
+module "role-alc-sa"{
+  source = "./modules/eks/role"
+  role-alc_role_name = "alb-ingress-sa-role"
+  role-alc-oidc_without_https = module.eks.oidc_url_without_https
+  role-alc-namespace = module.sa-alc.sa-namespace
+  role-alc-sa_name = module.sa-alc.sa-name
+}
+
+module "openid_connect_provider" {
+  source = "./modules/aws_openid_connect_provider"
+  client_id_list = ["sts.amazonaws.com"]
+  url = module.eks.oidc_url
 }
