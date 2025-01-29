@@ -52,7 +52,7 @@ module "iam" {
 }
 
 module "eks" {
-  source = "./modules/eks"
+  source = "./modules/eks/cluster"
   /* -- vpc -- */
   vpc_id = module.vpc.vpc_id
   eks_private_subnet_ids = module.vpc.eks_private_subnet_ids
@@ -111,4 +111,5 @@ module "openid_connect_provider" {
   source = "./modules/aws_openid_connect_provider"
   client_id_list = ["sts.amazonaws.com"]
   url = module.eks.oidc_url
+  depends_on = [module.eks]
 }

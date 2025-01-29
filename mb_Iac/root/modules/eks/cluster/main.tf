@@ -47,10 +47,12 @@ resource "aws_eks_node_group" "mb_eks_node_group" {
   instance_types = ["t3.medium"]
 }
 /*------------------------------*/
-resource "null_resource" "update_kubeconfig" {
+resource "terraform_data" "update_kubeconfig" {
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --region ap-northeast-2 --name ${aws_eks_cluster.mb_eks_cluster.name}"
   }
+
   depends_on = [aws_eks_cluster.mb_eks_cluster]
 }
+
 

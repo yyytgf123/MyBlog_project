@@ -1,4 +1,3 @@
-#main.tf
 resource "aws_iam_role" "alb_ingress_sa_role" {
   name = var.role-alc_role_name
 
@@ -8,7 +7,7 @@ resource "aws_iam_role" "alb_ingress_sa_role" {
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::<my_aws_account_id>:oidc-provider/${var.role-alc-oidc_without_https}"
+          "Federated": "arn:aws:iam::047719624346:oidc-provider/${var.role-alc-oidc_without_https}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
