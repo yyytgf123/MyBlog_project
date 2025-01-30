@@ -98,17 +98,17 @@ resource "aws_eip_association" "mb_bastion_ec2_eip" {
 
 /*----- Bastion EC2 -----*/
 resource "aws_instance" "mb_bastion_ec2" {
-  ami = data.aws_ami.ubuntu.id
+  ami = "ami-01d7257ec2efacdcc"
   subnet_id = var.public_subnet_id
     key_name = "myblog"
   instance_type = "t2.micro"
   security_groups = [var.bastion_security_group_id]
 
-  ebs_block_device {
-    device_name = "/dev/sda1"
-    volume_size = "10"
-    volume_type = "gp2"
-  }
+  # ebs_block_device {
+  #   device_name = "/dev/sda1"
+  #   volume_size = "10"
+  #   volume_type = "gp2"
+  # }
 
   tags = {
     Name = "mb_bastion_ec2"
