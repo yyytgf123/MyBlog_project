@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-spring-service
+spec:
+  selector:
+    app: my-spring-app
+  ports:
+    - protocol: TCP
+      port: 80      # Ingress가 연결할 포트
+      targetPort: 8083  # Spring Boot 애플리케이션 포트
+  type: ClusterIP   # ALB를 사용할 때는 반드시 ClusterIP 사용

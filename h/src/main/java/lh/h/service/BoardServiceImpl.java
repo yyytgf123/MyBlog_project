@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 
     /* form write(file upload + write) */
     /** File Mapping url **/
-    private static final String UPLOAD_DIR = Paths.get(System.getProperty("user.dir"), "files").toString();
+    private static final String UPLOAD_DIR = "/home/ubuntu/MyBlog_project/h/files";
 
     @Override
     @Transactional

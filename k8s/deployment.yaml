@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-spring-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-spring-app
+  template:
+    metadata:
+      labels:
+        app: my-spring-app
+    spec:
+      containers:
+        - name: my-spring-app
+          image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://10.0.0.235:3306/myblog_db?serverTimezone=Asia/Seoul"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-spring-db-secret
+                  key: password

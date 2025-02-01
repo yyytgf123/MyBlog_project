@@ -11,6 +11,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // /files/** URL을 JAR 외부 디렉토리로 매핑
         registry.addResourceHandler("/files/**")
-                .addResourceLocations("file:" + System.getProperty("user.dir") + "/files/");
+                .addResourceLocations("file:/home/ubuntu/My_Blog_project/h/files");
     }
 }
