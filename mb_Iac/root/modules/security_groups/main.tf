@@ -139,6 +139,20 @@
     }
 
     ingress {
+      from_port = 8081
+      to_port = 8081
+      protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      from_port = 8082
+      to_port = 8082
+      protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
       from_port = 8083
       to_port = 8083
       protocol = "tcp"

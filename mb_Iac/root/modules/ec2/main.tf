@@ -98,7 +98,7 @@ resource "aws_eip_association" "mb_bastion_ec2_eip" {
 
 /*----- Bastion EC2 -----*/
 resource "aws_instance" "mb_bastion_ec2" {
-  ami = "ami-01d7257ec2efacdcc"
+  ami = "ami-02324eacf9d67fe47"
   subnet_id = var.public_subnet_id
     key_name = "myblog"
   instance_type = "t2.micro"
