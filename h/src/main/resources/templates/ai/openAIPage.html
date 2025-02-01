@@ -12,6 +12,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/openAIPage.css">
 
+    <!-- API_KEY -> js로 Thymeleaf에서 전달 -->
+    <input type="hidden" id="api-key" th:value="${apiKey}">
+
     <!-- JS -->
     <script src="/js/openAI.js" defer></script>
 
