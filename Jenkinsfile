@@ -19,10 +19,10 @@ pipeline {
 
         stage('Build Gradle project') {
             steps {
-                sh './gradlew clean'
-                echo 'Jar clean success'
-
-                sh './gradlew build'
+                dir('h') {  // JAR 빌드 경로 지정
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean build'
+                }
                 echo 'Jar build success'
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('Docker image create & Push to ECR') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_TAG} ."
+                    sh "docker build -t ${IMAGE_TAG} -f Dockerfile /home/ubuntu/MyBlog_project/h/"
                     echo "Docker image created: ${IMAGE_TAG}"
 
                     sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com"
@@ -42,16 +42,18 @@ pipeline {
             }
         }
 
-        stage('Deploy to K8s') {
+        stage('Update Deployment in Git for ArgoCD') {
             steps {
-                echo 'Deploying to Kubernetes'
+                script {
+                    echo 'Updating Kubernetes deployment file'
+                    sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:${BUILD_NUMBER}|' deployment.yaml"
 
-                // deployment.yaml의 이미지 태그를 최신 빌드 버전으로 변경
-                sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:${BUILD_NUMBER}|' deployment.yaml"
-
-                echo 'Deploy stage - Kubernetes Deployment'
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl rollout status deployment my-app -n my-namespace'
+                    sh "git config --global user.email 'jenkins@yourdomain.com'"
+                    sh "git config --global user.name 'Jenkins CI'"
+                    sh "git add deployment.yaml"
+                    sh "git commit -m 'Update deployment image to ${IMAGE_TAG}'"
+                    sh "git push origin main"
+                }
             }
         }
     }
