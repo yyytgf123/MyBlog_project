@@ -56,5 +56,12 @@ pipeline {
                 }
             }
         }
+        stage('Trigger ArgoCD Sync') {
+            steps {
+                script {
+                    sh "argocd app sync my-spring-app"
+                }
+            }
+        }
     }
 }
