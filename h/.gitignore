@@ -38,3 +38,4 @@ out/
 
 ### OpenAI, MySQL ###
 application.properties
+src/main/resources/application.properties
