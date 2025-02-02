@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_TAG = "047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:${BUILD_NUMBER}"
+        IMAGE_TAG = "047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:${BUILD_NUMBER}"
     }
     stages {
         stage('Prepare') {
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     echo 'Updating Kubernetes deployment file'
-                    sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:${BUILD_NUMBER}|' deployment.yaml"
+                    sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:${BUILD_NUMBER}|' k8s/deployment.yaml"
 
                     sh "git config --global user.email 'jenkins@yourdomain.com'"
                     sh "git config --global user.name 'Jenkins CI'"
