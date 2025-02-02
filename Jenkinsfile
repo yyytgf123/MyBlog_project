@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build Gradle project') {
             steps {
-                dir('h') {  // JAR 빌드 경로 지정
+                dir('/home/ubuntu/MyBlog_project/h') {  // JAR 빌드 경로 지정
                     sh 'chmod +x ./gradlew'
                     sh './gradlew clean build'
                 }
