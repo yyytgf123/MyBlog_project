@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build Gradle project') {
             steps {
-                dir('/home/ubuntu/MyBlog_project/h') {  // JAR 빌드 경로 지정
+                dir("${WORKSPACE}") {  // ✅ checkout된 디렉토리에서 빌드
                     sh 'chmod +x ./gradlew'
                     sh './gradlew clean build'
                 }
@@ -30,7 +30,7 @@ pipeline {
         stage('Docker image create & Push to ECR') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_TAG} -f Dockerfile /home/ubuntu/MyBlog_project/h/"
+                    sh "docker build -t ${IMAGE_TAG} -f Dockerfile ${WORKSPACE}/"
                     echo "Docker image created: ${IMAGE_TAG}"
 
                     sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com"
@@ -46,16 +46,17 @@ pipeline {
             steps {
                 script {
                     echo 'Updating Kubernetes deployment file'
-                    sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:${BUILD_NUMBER}|' k8s/deployment.yaml"
+                    sh "sed -i 's|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:.*|image: 047719624346.dkr.ecr.ap-northeast-2.amazonaws.com/app:${BUILD_NUMBER}|' ${WORKSPACE}/k8s/deployment.yaml"
 
                     sh "git config --global user.email 'jenkins@yourdomain.com'"
                     sh "git config --global user.name 'Jenkins CI'"
-                    sh "git add deployment.yaml"
+                    sh "git add ${WORKSPACE}/k8s/deployment.yaml"  // ✅ 경로 수정
                     sh "git commit -m 'Update deployment image to ${IMAGE_TAG}'"
                     sh "git push origin main"
                 }
             }
         }
+
         stage('Trigger ArgoCD Sync') {
             steps {
                 script {
