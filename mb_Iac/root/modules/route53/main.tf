@@ -20,9 +20,9 @@ resource "aws_route53_record" "mb_route53_a_record" {
   # ttl = 300
 
 
-  # alias { // alb - A record -> Alias로 생성
-  #   evaluate_target_health = false
-  #   name                   = var.alb_dn
-  #   zone_id                = var.alb_zone_id
-  # }
+  alias { // alb - A record -> Alias로 생성
+    evaluate_target_health = false
+    name                   = var.alb_dn
+    zone_id                = var.alb_zone_id
+  }
 }

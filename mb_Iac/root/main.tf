@@ -37,14 +37,14 @@ module "ec2" {
   eks_cluster_name = module.eks.mb_eks_cluster_name
 }
 
-# module "route53" {
-#   source = "./modules/route53"
-#   /* -- ec2 -- */
-#   bastion_ec2_ip = module.ec2.bastion_ec2_ip
-#   /* -- alb -- */
-#   alb_dn = module.alb.mb_alb_dn
-#   alb_zone_id = module.alb.mb_alb_zond_id
-# }
+module "route53" {
+  source = "./modules/route53"
+  /* -- ec2 -- */
+  bastion_ec2_ip = module.ec2.bastion_ec2_ip
+  /* -- alb -- */
+  alb_dn = module.alb.mb_alb_dn
+  alb_zone_id = module.alb.mb_alb_zond_id
+}
 
 module "iam" {
   source = "./modules/iam"
