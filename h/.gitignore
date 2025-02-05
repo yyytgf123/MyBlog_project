@@ -31,3 +31,4 @@ out/
 .vscode/
 
 ### OpenAI, MySQL ###
+application.properties
