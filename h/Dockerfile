@@ -1,5 +1,4 @@
-# base image
-FROM openjdk:17-jdk-alpine
+# base imageFROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
