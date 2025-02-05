@@ -7,7 +7,7 @@ WORKDIR /app
 LABEL authors="lhh"
 
 # jar 파일 복사
-COPY build/libs/*.jar app.jar
+COPY h/build/libs/*.jar app.jar
 
 # port expose
 EXPOSE 8083
