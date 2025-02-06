@@ -11,7 +11,7 @@ pipeline {
                     branches: [[name: '*/main']],
                     userRemoteConfigs: [[
                         url: 'https://github.com/yyytgf123/MyBlog_project.git',
-                        credentialsId: 'jenkins_deploy'
+                        credentialsId: 'dev123'
                     ]]
                 ])
             }
