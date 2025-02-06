@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tailwind-out.css" rel="stylesheet">
+    <!-- 공통 헤더 포함 -->
+    <th:block th:replace="fragments/header2 :: header2"></th:block>
+
+    <title th:text="${board.title}">게시물 상세 보기</title>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<!-- 중앙 정렬을 위한 Wrapper -->
+<div class="max-w-4xl mx-auto px-4 mt-8">
+
+    <!-- 공통 헤더 -->
+    <header class="py-5 border-b border-gray-300">
+        <h1 class="flex justify-center text-2xl font-bold" th:text="${board.title}">제목</h1>
+        <div class="flex justify-end text-sm text-gray-600 mt-1">
+            <p><strong>작성자:</strong> <span th:text="${board.writer}">작성자</span></p>
+        </div>
+        <div class="flex justify-end text-sm text-gray-600 mt-1">
+            <p><strong>작성일:</strong> <span th:text="${board.createdDate}">작성일</span></p>
+
+        </div>
+    </header>
+
+    <!-- 파일 업로드 섹션 -->
+    <section class="py-5">
+        <div class="flex justify-center">
+            <img th:src="@{/files/{filename}(filename=${board.filename})}"
+                 alt="첨부 이미지"
+                 class="max-w-full rounded-md shadow-md">
+        </div>
+    </section>
+
+    <!-- 게시글 내용 -->
+    <section class="py-5">
+        <div class="px-3 py-4 text-base text-gray-900 sm:text-sm"
+             style="word-wrap: break-word; word-break: break-word;">
+            <span th:text="${board.content}">게시글 내용</span>
+        </div>
+    </section>
+
+    <!-- 회색 선 추가 -->
+    <hr class="border-t border-gray-300 my-4">
+
+    <!-- 버튼 섹션 -->
+    <section class="py-5 flex justify-end gap-4">
+        <!-- 수정 버튼 -->
+        <form th:action="@{/boards/boardDetail/boardUpdate/{id}(id=${board.id})}" method="get">
+            <button type="submit"
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 hover:text-gray-900">
+                수정
+            </button>
+        </form>
+
+        <!-- 삭제 버튼 -->
+        <div sec:authorize="hasRole('ADMIN')">
+            <form th:action="@{/boards/{id}(id=${board.id})}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit"
+                        class="px-4 py-2 bg-gray-100 text-gray-800 rounded-md hover:bg-red-100 hover:text-red-700">
+                    삭제
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

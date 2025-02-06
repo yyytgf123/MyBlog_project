@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>ChatGPT Clone in JavaScript | CodingNepal</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/openAIPage.css">
+
+    <!-- API_KEY -> js로 Thymeleaf에서 전달 -->
+    <input type="hidden" id="api-key" th:value="${apiKey}">
+
+    <!-- JS -->
+    <script src="/js/openAI.js" defer></script>
+
+    <!-- 공통 헤더 -->
+    <link href="/css/tailwind-out.css" rel="stylesheet">
+    <th:blcok th:replace="fragments/header2 :: header2"></th:blcok>>
+</head>
+<body>
+<!-- Chats container -->
+<div class="chat-container"></div>
+
+<!-- Typing container -->
+<div class="content">
+<div class="typing-container">
+    <div class="typing-content">
+        <div class="typing-textarea">
+            <textarea id="chat-input" spellcheck="false" placeholder="Enter a prompt here" required></textarea>
+            <span id="send-btn" class="material-symbols-rounded">send</span>
+        </div>
+        <div class="typing-controls">
+            <span id="theme-btn" class="material-symbols-rounded">light_mode</span>
+            <span id="delete-btn" class="material-symbols-rounded">delete</span>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

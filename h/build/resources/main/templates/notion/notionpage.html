@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link href="/css/tailwind-out.css" rel="stylesheet">
+    <link href="/css/notionPage.css" rel="stylesheet">
+    <th:block th:replace="fragments/header2 :: header2"></th:block>
+
+</head>
+<body>
+<section class="flex justify-center relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 full-height">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20"></div>
+    <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center"></div>
+
+    <div class="h-auto min-h-screen">
+        <div class="logo-container" id="logo-container"></div>
+
+        <div class="menu-container">
+            <button class="menu-button" onclick="showMenu('devops-menu')">
+                <img src="/picture/notion/devops.jpg" alt="Hand-On">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">DevOps</h2>
+                    <p class="text-sm">What is devops?</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('os-menu')">
+                <img src="/picture/notion/os.jpeg" alt="OS">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">OS</h2>
+                    <p class="text-sm">Operating Systems</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('server-menu')">
+                <img src="/picture/notion/server.jpg" alt="Server">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Server</h2>
+                    <p class="text-sm">Cloud and Network</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('management-menu')">
+                <img src="/picture/notion/management.jpg" alt="Management">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Management</h2>
+                    <p class="text-sm">Development Tools</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('development-menu')">
+                <img src="/picture/notion/development.png" alt="Development">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Development</h2>
+                    <p class="text-sm">Development Section</p>
+                </div>
+            </button>
+            <button class="menu-button" onclick="showMenu('handon-menu')">
+                <img src="/picture/notion/handon.jpg" alt="Hand-On">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold">Hand-On</h2>
+                    <p class="text-sm">Practical Learning</p>
+                </div>
+            </button>
+        </div>
+    </div>
+</section>
+
+<div id="submenu-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center" onclick="closeMenu()">
+    <div class="bg-white rounded-lg" onclick="event.stopPropagation()" style="width: 90%; max-width: 1600px; padding: 40px;">
+        <div id="submenu-content" class="grid gap-4 justify-items-center"></div>
+    </div>
+</div>
+
+<script>
+    const menuData = {
+        "default-logo": [
+            { image: "/picture/notion/notion-logo.png" }
+        ],
+        "devops-menu": [
+            { title: "DevOps", image: "/picture/notion/devops.jpg", url: "https://sable-mars-102.notion.site/DevOps-188cb42f28df80319c8cdb2ead413c76?pvs=4"}
+        ],
+        "os-menu": [
+            { title: "Linux", image: "/picture/notion/item/linux.png", url: "https://sable-mars-102.notion.site/Linux-188cb42f28df80d1b731d9b57973daf0?pvs=4" },
+        ],
+        "server-menu": [
+            { title: "Cloud", image: "/picture/notion/item/AWSGCPAZURE.png", url: "https://sable-mars-102.notion.site/Cloud-188cb42f28df80a18ff5c115af3c2d18?pvs=4" },
+            { title: "Network", image: "/picture/notion/item/network.png", url: "https://sable-mars-102.notion.site/Network-188cb42f28df80de854bf44986459f1c?pvs=4" },
+        ],
+        "management-menu": [
+            { title: "Docker & k8s", image: "/picture/notion/item/docker&k8s.jpg", url: "https://sable-mars-102.notion.site/Docker-k8s-188cb42f28df806aa61ad23f917a5259?pvs=4" },
+            { title: "CI/CD", image: "/picture/notion/item/cicd.jpg", url: "https://sable-mars-102.notion.site/CI-CD-188cb42f28df806da966da72e263771a?pvs=4" },
+            { title: "IaC", image: "/picture/notion/item/iac.png", url: "https://sable-mars-102.notion.site/IaC-188cb42f28df80639777e5802b9d6f17?pvs=4" },
+            { title: "Git", image: "/picture/notion/item/git.png", url: "https://sable-mars-102.notion.site/Git-188cb42f28df80ecbb54df360818cae6?pvs=4" },
+        ],
+        "development-menu": [
+            { title: "Development Language", image: "/picture/notion/item/development.png", url: "https://sable-mars-102.notion.site/Develop-Language-188cb42f28df80ac8611d39adcc88dc7?pvs=4" },
+        ],
+        "handon-menu": [
+            { title: "Project-Based Learning", image: "/picture/notion/item/handon.png", url: "https://sable-mars-102.notion.site/Hand-On-188cb42f28df80109010cc5cda8bf2f4?pvs=4" },
+        ],
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const defaultLogo = menuData["default-logo"][0].image;
+        const logoContainer = document.getElementById('logo-container');
+        logoContainer.style.backgroundImage = `url(${defaultLogo})`;
+    });
+
+    document.querySelector('.logo-container').addEventListener('click', function() {
+        animateLogoAndShowMenu();
+    });
+
+    function animateLogoAndShowMenu() {
+        const logoContainer = document.querySelector('.logo-container');
+        const menuContainer = document.querySelector('.menu-container');
+
+        logoContainer.classList.add('hidden');
+
+        setTimeout(() => {
+            menuContainer.classList.add('active');
+        }, 300);
+    }
+
+    // 페이지 로드 시 기본 로고 설정
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultLogo = menuData["default-logo"][0].image;
+        const logoContainer = document.getElementById('logo-container');
+        logoContainer.style.backgroundImage = `url(${defaultLogo})`;
+    });
+
+    // 특정 메뉴 클릭 시 로고 변경 함수
+    function setLogoBackground(menuId) {
+        const logoContainer = document.getElementById('logo-container');
+        if (menuData[menuId] && menuData[menuId][0]) {
+            const imageUrl = menuData[menuId][0].image;
+            logoContainer.style.backgroundImage = `url(${imageUrl})`;
+        }
+    }
+
+    function showMenu(menuId) {
+        setLogoBackground(menuId);
+        const menuItems = menuData[menuId] || [];
+        const submenuContent = document.getElementById('submenu-content');
+        submenuContent.innerHTML = "";
+
+        menuItems.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.innerHTML = `
+                <a href="${item.url}" target="_blank" class="block w-full bg-white rounded-lg shadow-md p-4">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-40 object-cover rounded-t-lg">
+                    <h2 class="mt-2 text-lg font-bold">${item.title}</h2>
+                </a>
+            `;
+            submenuContent.appendChild(menuItem);
+        });
+
+        document.getElementById('submenu-overlay').classList.remove('hidden');
+    }
+
+    function closeMenu() {
+        document.getElementById('submenu-overlay').classList.add('hidden');
+    }
+</script>
+</body>
+</html>
