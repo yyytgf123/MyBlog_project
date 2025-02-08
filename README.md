@@ -1,12 +1,11 @@
-
 <h2>HOMEPAGE URL
-
 <h3>http://leehh.me</h3>
-
+<br>
+<br>
 <h3>Architecture</h3>
---------------
+---
 AWS
-![Image](https://github.com/user-attachments/assets/44d275b9-44c4-41b6-ae22-503dc8cd36dc)
+![Image](https://github.com/user-attachments/assets/6c31ae1e-b3ce-41e8-bfc8-e390a2ad89af)
 
 Terraform
 ![Image](https://github.com/user-attachments/assets/fde214ec-bed4-4da9-8b53-7b4fd5f175ee)
