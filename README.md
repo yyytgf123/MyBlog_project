@@ -8,13 +8,13 @@
 <h2>Architecture</h2>
 <strong>AWS</strong>
 
-<img src="https://github.com/user-attachments/assets/25e482d6-56a6-4b48-baab-0ebab7fd8674" width="700">
+<img src="https://github.com/user-attachments/assets/25e482d6-56a6-4b48-baab-0ebab7fd8674" width="1000">
 
 <strong>Terraform</strong>  
-<img src="https://github.com/user-attachments/assets/fde214ec-bed4-4da9-8b53-7b4fd5f175ee" width="700">
+<img src="https://github.com/user-attachments/assets/fde214ec-bed4-4da9-8b53-7b4fd5f175ee" width="1000">
 
 <strong>CI/CD Tools</strong>  
-<img src="https://github.com/user-attachments/assets/b4ce5dc1-edbe-478b-8257-4bdf3271f4bd" width="700">
+<img src="https://github.com/user-attachments/assets/b4ce5dc1-edbe-478b-8257-4bdf3271f4bd" width="1000">
 
 <strong>CI/CD Process</strong>  
-<img src="https://github.com/user-attachments/assets/bf4c8111-1c3f-44cd-a0fe-ace6cb2a562e" width="700">
+<img src="https://github.com/user-attachments/assets/bf4c8111-1c3f-44cd-a0fe-ace6cb2a562e" width="1000">
