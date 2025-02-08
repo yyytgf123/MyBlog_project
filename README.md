@@ -6,7 +6,7 @@
 <h3>Architecture</h3>
 ---
 **AWS**
-![Image](https://github.com/user-attachments/assets/6c31ae1e-b3ce-41e8-bfc8-e390a2ad89af)
+![image](https://github.com/user-attachments/assets/25e482d6-56a6-4b48-baab-0ebab7fd8674)
 
 **Terraform**
 ![Image](https://github.com/user-attachments/assets/fde214ec-bed4-4da9-8b53-7b4fd5f175ee)
