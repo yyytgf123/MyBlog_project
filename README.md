@@ -1,10 +1,9 @@
-<h2>HOMEPAGE URL
+<h2>HOMEPAGE URL</h2>
 <h3>http://leehh.me</h3>
 <br>
-<h2>Notion Page
-<h3>https://sable-mars-102.notion.site/My_Blog-Project-188cb42f28df815f8fe1f50e2b777404?pvs=4
+<h2>Notion Page</h2>
+<h3>https://sable-mars-102.notion.site/My_Blog-Project-188cb42f28df815f8fe1f50e2b777404?pvs=4</h3>
 <h3>Architecture</h3>
----
 **AWS**
 ![Image](https://github.com/user-attachments/assets/25e482d6-56a6-4b48-baab-0ebab7fd8674)
 
