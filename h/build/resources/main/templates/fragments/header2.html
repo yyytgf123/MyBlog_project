@@ -1,112 +1,150 @@
 <div th:fragment="header2" xmlns:sec="http://www.w3.org/1999/xhtml">
-<nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="absolute -inset-0.5"></span>
-                    <span class="sr-only">Open main menu</span>
-                    <!--
-                      Icon when menu is closed.
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden z-[10000]">
+                    <!-- 모바일 메뉴 버튼 -->
+                    <button id="mobile-menu-button" type="button"
+                            class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMobileMenu()">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-open-btn" class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </button>
+                </div>
 
-                      Menu open: "hidden", Menu closed: "block"
-                    -->
-                    <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                    <!--
-                      Icon when menu is open.
+                <!-- 모바일 메뉴 (전체 화면) -->
+                <div id="mobile-menu" class="hidden fixed inset-0 bg-gray-800 bg-opacity-95 flex flex-col justify-center items-center h-screen w-screen z-[9999]">
+                    <button id="menu-close-btn" type="button"
+                            class="absolute top-4 right-4 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            onclick="toggleMobileMenu()">
+                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
 
-                      Menu open: "block", Menu closed: "hidden"
-                    -->
-                    <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex shrink-0 items-center">
-                    <a href="/">
-                        <img class="h-8 w-auto" src="/picture/homeimage.png" alt="Your Company">
+                    <a href="/boards/blogpage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3">
+                        Article
+                    </a>
+                    <a href="/about/aboutpage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3">
+                        About
+                    </a>
+                    <a href="/notion/notionpage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3">
+                        Notion
+                    </a>
+                    <a href="/ai/openAIPage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3">
+                        OpenAI
+                    </a>
+
+                    <!-- member page -->
+                    <a href="/user/userPage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                        Member Page
                     </a>
                 </div>
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/boards/blogpage" class="rounded-md text-gray-300 hover:bg-gray-700  px-3 py-2 text-sm font-medium text-white" aria-current="page">Article</a>
-                        <a href="/about/aboutpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
-                        <a href="/notion/notionpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Notion</a>
-                        <a href="/ai/openAIPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">OpenAI</a>
-                    </div>
-                </div>
-            </div>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                <!-- Profile dropdown -->
-                <!-- 로그인 시 메뉴바, 로그아웃 시 메뉴바 설정 필요 -->
-                <div class="relative ml-3">
-                    <div>
-                        <button type="button"
-                        class="relative flex rounded-full bg-gray-800 text-sm
-                        focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
-                            <span class="absolute -inset-1.5"></span>
-                            <span class="sr-only">Open user menu</span>
-                            <img class="size-8 rounded-full" src="/picture/login/loginuser.jpg" alt="">
-                        </button>
-                    </div>
-                    <div id="dropdown-menu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
-                         role="menu" aria-orientation="vertical"
-                         aria-labelledby="user-menu-button" tabindex="-1">
-                        <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
-                        <!-- 로그인 상태라면 로그아웃 버튼 -->
-                        <form th:action="@{/user/logout}" method="post" sec:authorize="isAuthenticated()">
-                            <button type="submit" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
-                                Logout
-                            </button>
-                        </form>
-                        <!-- 로그아웃 상태라면 로그인 버튼 -->
-                        <a href="/user/userPage" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2" sec:authorize="isAnonymous()">
-                            Login
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex shrink-0 items-center">
+                        <a href="/">
+                            <img class="h-8 w-auto" src="/picture/homeimage.png" alt="Your Company">
                         </a>
                     </div>
+                    <div class="hidden sm:ml-6 sm:block">
+                        <div class="flex space-x-4">
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            <a href="/boards/blogpage" class="rounded-md text-gray-300 hover:bg-gray-700  px-3 py-2 text-sm font-medium text-white" aria-current="page">Article</a>
+                            <a href="/about/aboutpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
+                            <a href="/notion/notionpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Notion</a>
+                            <a href="/ai/openAIPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">OpenAI</a>
+
+                            <!-- member page -->
+                            <a href="/user/userPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                                Member Page
+                            </a>
+                        </div>
+                    </div>
                 </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                <!-- profile hide-->
-                <script>
-                    let isMenuVisible = false; //현 메뉴 상태 확인(true : 보임, false : 숨김)
+                    <!-- Profile dropdown -->
+                    <!-- 로그인 시 메뉴바, 로그아웃 시 메뉴바 설정 필요 -->
+                    <div class="relative ml-3">
+                        <div>
+                            <button type="button"
+                                    class="relative flex rounded-full bg-gray-800 text-sm
+                        focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                    id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">Open user menu</span>
+                                <img class="size-8 rounded-full" src="/picture/login/loginuser.jpg" alt="">
+                            </button>
+                        </div>
+                        <div id="dropdown-menu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
+                             role="menu" aria-orientation="vertical"
+                             aria-labelledby="user-menu-button" tabindex="-1">
+                            <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
+                            <!-- 로그인 상태라면 로그아웃 버튼 -->
+                            <form th:action="@{/user/logout}" method="post" sec:authorize="isAuthenticated()">
+                                <button type="submit" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
+                                    Logout
+                                </button>
+                            </form>
+                            <!-- 로그아웃 상태라면 로그인 버튼 -->
+                            <a href="/user/userPage" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2" sec:authorize="isAnonymous()">
+                                Login
+                            </a>
+                        </div>
+                    </div>
 
-                    function toggleMenu() { // 드롭다운 메뉴 DDM 요소 갖고옴
-                        const menu = document.getElementById("dropdown-menu"); // 현재 사태를 반전
-                        isMenuVisible = !isMenuVisible;
-                        if (isMenuVisible) {
-                            menu.classList.remove(`hidden`); // `hidden` 클래스를 제거하여 메뉴를 보이게 설정
-                        } else {
-                            menu.classList.add(`hidden`); // `hidden` 클래스를 추가하여 메뉴를 숨김
+                    <script>
+                        let isMenuVisible = false; // 현재 메뉴 상태 (true: 보임, false: 숨김)
+
+                        function toggleMenu() {
+                            const menu = document.getElementById("dropdown-menu");
+                            isMenuVisible = !isMenuVisible;
+
+                            if (isMenuVisible) {
+                                menu.classList.remove("hidden"); // hidden 클래스 제거하여 보이게 함
+                            } else {
+                                menu.classList.add("hidden"); // hidden 클래스 추가하여 숨김
+                            }
                         }
-                    }
 
-                    // 메뉴 외부를 클릭했을 때 메뉴를 닫는 이벤트 설정
-                    window.addEventListener(`click`, function (e) {
-                        // 메뉴 버튼 DDM 요소 가져옴
-                        const menuButton = document.getElementById(`user-menu-button`);
-                        // 드롭다운 메뉴 DDM 요소 가져오기
-                        const menu = document.getElementById(`dropdown-menu`);
+                        // 메뉴 외부 클릭 시 메뉴 닫기 이벤트 설정
+                        window.addEventListener("click", function (e) {
+                            const menuButton = document.getElementById("user-menu-button");
+                            const menu = document.getElementById("dropdown-menu");
 
-                        // 메뉴 버튼 또는 메뉴 내부를 클릭한 경우 이벤트 무시(메뉴바를 닫히지 않게 해줌)
-                        if (menuButton.contains(e.target) || menu.contains(e.target)) {
-                            return;
+                            // 메뉴 버튼 또는 메뉴 내부를 클릭한 경우 이벤트 무시
+                            if (menuButton.contains(e.target) || menu.contains(e.target)) {
+                                return;
+                            }
+
+                            // 메뉴 외부를 클릭한 경우 메뉴를 숨김
+                            isMenuVisible = false;
+                            menu.classList.add("hidden");
+                        });
+
+                        // 모바일 메뉴 토글 함수
+                        function toggleMobileMenu() {
+                            const mobileMenu = document.getElementById("mobile-menu");
+                            const isHidden = mobileMenu.classList.contains("hidden");
+
+                            if (isHidden) {
+                                mobileMenu.classList.remove("hidden");
+                                mobileMenu.classList.add("flex");
+                                document.body.style.overflow = "hidden"; // 스크롤 방지
+                            } else {
+                                mobileMenu.classList.add("hidden");
+                                mobileMenu.classList.remove("flex");
+                                document.body.style.overflow = ""; // 스크롤 원래대로
+                            }
                         }
-
-                        //메뉴 버튼 및 메뉴 외부를 클릭한 경우 메뉴를 숨김
-                        isMenuVisible = false;
-                        menu.classList.add(`hidden`);
-                    });
-                </script>
-                <!------------->
+                    </script>
+                    <!------------->
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 </div>
