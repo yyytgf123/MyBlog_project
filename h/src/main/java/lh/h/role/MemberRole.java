@@ -1,5 +1,5 @@
 package lh.h.role;
 
 public enum MemberRole {
-    USER, ADMIN
+    USER, Member, ADMIN
 }

@@ -37,6 +37,11 @@
                     <a href="/ai/openAIPage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3">
                         OpenAI
                     </a>
+
+                    <!-- member page -->
+                    <a href="/user/userPage" class="block text-center text-lg font-medium text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-3" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                        Member Page
+                    </a>
                 </div>
 
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -52,6 +57,11 @@
                             <a href="/about/aboutpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
                             <a href="/notion/notionpage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Notion</a>
                             <a href="/ai/openAIPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">OpenAI</a>
+
+                            <!-- member page -->
+                            <a href="/user/userPage" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                                Member Page
+                            </a>
                         </div>
                     </div>
                 </div>

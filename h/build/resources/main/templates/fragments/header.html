@@ -21,6 +21,11 @@
                 <a href="/boards/blogpage" class="text-sm/6 font-semibold text-gray-900">Articles</a>
                 <a href="/notion/notionpage" class="text-sm/6 font-semibold text-gray-900">Notion</a>
                 <a href="/ai/openAIPage" class="text-sm/6 font-semibold text-gray-900">OpenAI</a>
+
+                <!-- member page -->
+                <a href="/user/userPage" class="text-sm/6 font-semibold text-gray-900" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                    Member Page
+                </a>
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                 <!-- 로그인 상태라면 로그아웃 버튼 -->
@@ -61,6 +66,11 @@
                             <a href="/boards/blogpage" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Articles</a>
                             <a href="/notion/notionpage" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Notion</a>
                             <a href="/ai/openAIPage" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">OpenAI</a>
+
+                            <!-- member page -->
+                            <a href="/user/userPage" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">
+                                Member Page
+                            </a>
                         </div>
                         <div class="py-6">
                             <!-- 로그인 상태라면 로그아웃 버튼 -->
