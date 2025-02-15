@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/tailwind-out.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/card-text.css">
     <!-- 공통 헤더 포함 -->
     <th:block th:replace="fragments/header2 :: header2"></th:block>
 
@@ -37,9 +38,10 @@
 
     <!-- 게시글 내용 -->
     <section class="py-5">
-        <div class="px-3 py-4 text-base text-gray-900 sm:text-sm"
-             style="word-wrap: break-word; word-break: break-word;">
-            <span th:text="${board.content}">게시글 내용</span>
+        <div class="px-3 py-4 text-base text-gray-900 sm:text-sm" style="word-wrap: break-word; word-break: break-word;">
+            <div class="markdown-body" data-theme="light" th:utext="${@commonUtil.markdown(board.content)}">
+                <span th:text="${board.content}">게시글 내용</span>
+            </div>
         </div>
     </section>
 
