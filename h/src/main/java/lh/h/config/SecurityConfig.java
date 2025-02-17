@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -25,6 +28,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        List<Integer> countList = new ArrayList<>();
+        for (int i = 1; i <= 10000; i++) {
+            countList.add(i);
+        }
+
+
         http
                 /* 권한 없을시 이동 경로 -> CustomAccessDeniedHandler 사용 */
                 .exceptionHandling(exception -> exception
@@ -33,6 +43,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/boards/boardDetail/boardUpdate/**", "/boards/form").hasRole("ADMIN") // ADMIN만 접근 가능
+                        .requestMatchers("/boards/pagenumber/**").hasAnyRole("MEMBER", "ADMIN")
                         .anyRequest().permitAll() // 다른 모든 요청은 허용
                 )
                 .formLogin(form -> form
