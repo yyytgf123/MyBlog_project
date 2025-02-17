@@ -24,11 +24,20 @@
     <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl font-bold text-center mb-12">Board List</h1>
 
+        <!-- Search -->
+        <form action="/boards/blogpage" method="GET" class="flex space-x-2 justify-end" >
+            <input type="text" name="searchKeyword" id="search" placeholder="검색어를 입력하세요"
+                   class="w-64 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-blue-600 transition duration-200">
+                    검색
+            </button>
+        </form>
+
         <!-- 3x3 Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-4">
             <!-- 각 게시판 항목 -->
             <div th:each="board : ${boards.content}" class="rounded-lg shadow-lg bg-white overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <a th:href="@{/boards/{id} (id=${board.id})}" class="block">
+                <a th:href="@{/boards/pagenumber/{id} (id=${board.id})}" class="block">
                     <!-- 이미지 -->
                     <img
                             th:src="@{/files/{filename}(filename=${board.filename})}"

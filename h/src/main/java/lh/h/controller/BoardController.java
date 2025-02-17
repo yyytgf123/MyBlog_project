@@ -163,7 +163,7 @@ public class BoardController {
     /*----------------------------------------------------------------------------------------------------------------*/
 
     /* 게시글 상세보기 --------------------------------------------------------------------------------------------------*/
-    @GetMapping("/{id}")
+    @GetMapping("/pagenumber/{id}")
     public String viewBoard(@PathVariable Long id, Model model) {
         Board board = boardService.findById(id);
         model.addAttribute("board", board);
